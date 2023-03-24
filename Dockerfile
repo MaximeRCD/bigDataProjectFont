@@ -4,8 +4,7 @@ WORKDIR /usr/src/app/big_data_project
 
 RUN pip install --upgrade pip 
 COPY /big_data_project/requirements.txt requirements.txt
-RUN pip install -r requirements.txt --index-url https://repos.tech.orange/artifactory/api/pypi/pythonproxy/simple
-
+RUN pip install -r requirements.txt 
 # copy project
 COPY . /usr/src/app
 
