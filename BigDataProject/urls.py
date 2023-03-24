@@ -17,8 +17,14 @@ from django.contrib import admin
 from django.urls import path
 
 import landing.views
+import dashboard.views
+import play.views
+import user_settings.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', landing.views.landing)
+    path('', landing.views.landing),
+    path('dashboard/', dashboard.views.dashboard, name="dashboard"),
+    path('play/', play.views.play, name="play"),
+    path('user_settings/', user_settings.views.user_settings, name="user_settings")
 ]

@@ -1,0 +1,101 @@
+{% extends 'base_dashboard.html' %}
+{% load static %}
+
+{% block header_pretitle %}Overview{% endblock %}
+{% block header_title %}Dashboard{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-6">
+            <div class="chart">
+                <canvas class="chart-canvas" id="overviewChart"></canvas>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="chart">
+                <canvas class="chart-canvas" id="feedChart"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <div class="chart chart-appended">
+                <canvas class="chart-canvas" id="trafficChart" data-toggle="legend" data-target="#trafficChartLegend"></canvas>
+            </div>
+            <div class="chart-legend" id="trafficChartLegend"></div>
+        </div>
+    </div>
+
+    <script>
+        new Chart('overviewChart', {
+            type: 'line',
+            options: {
+                scales: {
+                    y: {
+                        ticks: {
+                            callback: function (value) {
+                                return '$' + value + 'k';
+                            }
+                        }
+                    }
+                }
+            },
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                datasets: [{
+                    label: 'Earned',
+                    data: [0, 10, 5, 15, 10, 20, 15, 25, 20, 30, 25, 40]
+                }]
+            }
+        });
+    </script>
+
+    <script>
+        new Chart('feedChart', {
+            type: 'bar',
+            options: {
+                scales: {
+                    y: {
+                        ticks: {
+                            callback: function (value) {
+                                return '$' + value + 'k';
+                            }
+                        }
+                    }
+                }
+            },
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                datasets: [{
+                    label: 'Sales',
+                    data: [25, 20, 30, 22, 17, 10, 18, 26, 28, 26, 20, 32]
+                }]
+            }
+        });
+    </script>
+
+
+    <script>
+        new Chart('trafficChart', {
+            type: 'doughnut',
+            options: {
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            afterLabel: function () {
+                                return '%'
+                            }
+                        }
+                    }
+                }
+            },
+            data: {
+                labels: ['Direct', 'Organic', 'Referral'],
+                datasets: [{
+                    data: [60, 25, 15],
+                    backgroundColor: ['#2C7BE5', '#A6C5F7', '#D2DDEC']
+                }]
+            }
+        });
+    </script>
+{% endblock %}

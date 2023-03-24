@@ -1,0 +1,142 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'favicon/site.webmanifest' %}">
+    <link rel="mask-icon" href="{% static 'favicon/safari-pinned-tab.svg' %}" color="#5bbad5">
+    <link rel="shortcut icon" href="{% static 'favicon/favicon.ico' %}">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="msapplication-config" content="{% static 'favicon/browserconfig.xml' %}">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- Libs CSS -->
+    <link rel="stylesheet" href="{% static 'Dashkit/css/libs.bundle.css' %}"/>
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href="{% static 'Dashkit/css/theme.bundle.css' %}"/>
+
+    <!-- Title -->
+    <title>BrainBusters</title>
+</head>
+<body>
+<!-- NAVIGATION -->
+<nav class="navbar navbar-vertical fixed-start navbar-expand-md navbar-light" id="sidebar">
+    <div class="container-fluid">
+
+        <!-- Toggler -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarCollapse"
+                aria-controls="sidebarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="">
+            <img src="{% static 'logo.png' %}" class="navbar-brand-img mx-auto" alt="..."
+                 style="max-height: 6rem!important;">
+        </a>
+
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="sidebarCollapse">
+
+            <!-- Navigation -->
+            <ul class="navbar-nav">
+                {% if 'dashboard' in request.path %}
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'dashboard' %}">
+                            <i class="fe fe-grid"></i> Dashboard
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'dashboard' %}">
+                            <i class="fe fe-grid"></i> Dashboard
+                        </a>
+                    </li>
+                {% endif %}
+
+                {% if 'play' in request.path %}
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'play' %}">
+                            <i class="fe fe-play-circle"></i> Play
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'play' %}">
+                            <i class="fe fe-play-circle"></i> Play
+                        </a>
+                    </li>
+                {% endif %}
+
+                {% if 'user_settings' in request.path %}
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'user_settings' %}">
+                            <i class="fe fe-user"></i> User_settings
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'user_settings' %}">
+                            <i class="fe fe-user"></i> User_settings
+                        </a>
+                    </li>
+                {% endif %}
+                <li class="navbar-user nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="fe fe-log-out"></i> Log Out
+                    </a>
+                </li>
+            </ul>
+
+        </div> <!-- / .navbar-collapse -->
+
+    </div>
+</nav>
+
+<div class="main-content">
+
+    <!-- HEADER -->
+    <div class="header">
+        <div class="container-fluid">
+
+            <!-- Body -->
+            <div class="header-body">
+                <div class="row align-items-end">
+                    <div class="col">
+
+                        <!-- Pretitle -->
+                        <h6 class="header-pretitle">
+                            {% block header_pretitle %}{% endblock %}
+                        </h6>
+
+                        <!-- Title -->
+                        <h1 class="header-title">
+                            {% block header_title %}{% endblock %}
+                        </h1>
+
+                    </div>
+                </div> <!-- / .row -->
+            </div> <!-- / .header-body -->
+
+        </div>
+    </div> <!-- / .header -->
+    <div class="container-fluid">
+        {% block content %}
+        {% endblock %}
+    </div>
+</div>
+
+<!-- JAVASCRIPT -->
+<!-- Vendor JS -->
+<script src="{% static 'Dashkit/js/vendor.bundle.js' %}"></script>
+
+<!-- Theme JS -->
+<script src="{% static 'Dashkit/js/theme.bundle.js' %}"></script>
+</body>
+</html>
