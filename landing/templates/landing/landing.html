@@ -1,0 +1,539 @@
+{% extends 'base_landing.html' %}
+{% load static %}
+
+{% block modals %}
+    <!-- Signup: Horizontal  -->
+    <div class="modal fade" id="modalSignupHorizontal" tabindex="-1" role="dialog"
+         aria-labelledby="modalSignupHorizontalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="card card-row">
+                    <div class="row gx-0">
+                        <div class="col-12 col-md-6 bg-cover card-img-start"
+                             style="background-image: url({% static 'Landkit/img/photos/photo-8.jpg' %});">
+
+                            <!-- Image (placeholder) -->
+                            <img src="{% static 'Landkit/img/photos/photo-8.jpg' %}" alt="..."
+                                 class="img-fluid d-md-none invisible">
+
+                            <!-- Shape -->
+                            <div class="shape shape-end shape-fluid-y text-white d-none d-md-block">
+                                <svg viewBox="0 0 112 690" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M116 0H51v172C76 384 0 517 0 517v173h116V0z" fill="currentColor"/>
+                                </svg>
+                            </div>
+
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="card-body">
+
+                                <!-- Close -->
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                                <!-- Heading -->
+                                <h2 class="mb-0 fw-bold text-center" id="modalSignupHorizontalTitle">
+                                    Sign Up
+                                </h2>
+
+                                <!-- Text -->
+                                <p class="mb-6 text-center text-muted">
+                                    Simplify your workflow in minutes.
+                                </p>
+
+                                <!-- Form -->
+                                <form class="mb-6">
+
+                                    <!-- Email -->
+                                    <div class="form-group">
+                                        <label class="visually-hidden" for="modalSignupHorizontalEmail">
+                                            Your email
+                                        </label>
+                                        <input type="email" class="form-control" id="modalSignupHorizontalEmail"
+                                               placeholder="Your email">
+                                    </div>
+
+                                    <!-- Password -->
+                                    <div class="form-group mb-5">
+                                        <label class="visually-hidden" for="modalSignupHorizontalPassword">
+                                            Create a password
+                                        </label>
+                                        <input type="password" class="form-control" id="modalSignupHorizontalPassword"
+                                               placeholder="Create a password">
+                                    </div>
+
+                                    <!-- Submit -->
+                                    <button class="btn w-100 btn-primary" type="submit">
+                                        Sign up
+                                    </button>
+
+                                </form>
+
+                                <!-- Text -->
+                                <p class="mb-0 fs-sm text-center text-muted">
+                                    Already have an account? <a data-bs-toggle="modal" href="#modalSigninHorizontal">Log
+                                    in</a>.
+                                </p>
+
+                            </div>
+                        </div>
+
+                    </div> <!-- / .row -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Signin: Horizontal  -->
+    <div class="modal fade" id="modalSigninHorizontal" tabindex="-1" role="dialog"
+     aria-labelledby="modalSigninHorizontalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="card card-row">
+                <div class="row gx-0">
+                    <div class="col-12 col-md-6 bg-cover card-img-start"
+                         style="background-image: url({% static 'Landkit/img/photos/photo-1.jpg' %});">
+
+                        <!-- Image (placeholder) -->
+                        <img src="{% static 'Landkit/img/photos/photo-1.jpg' %}" alt="..."
+                             class="img-fluid d-md-none invisible">
+
+                        <!-- Shape -->
+                        <div class="shape shape-end shape-fluid-y text-white d-none d-md-block">
+                            <svg viewBox="0 0 112 690" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M116 0H51v172C76 384 0 517 0 517v173h116V0z" fill="currentColor"/>
+                            </svg>
+                        </div>
+
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="card-body">
+
+                            <!-- Close -->
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                            <!-- Heading -->
+                            <h2 class="mb-0 fw-bold text-center" id="modalSigninHorizontalTitle">
+                                Sign In
+                            </h2>
+
+                            <!-- Text -->
+                            <p class="mb-6 text-center text-muted">
+                                Simplify your workflow in minutes.
+                            </p>
+
+                            <!-- Form -->
+                            <form class="mb-6">
+
+                                <!-- Email -->
+                                <div class="form-group">
+                                    <label class="visually-hidden" for="modalSigninHorizontalEmail">
+                                        Your email
+                                    </label>
+                                    <input type="email" class="form-control" id="modalSigninHorizontalEmail"
+                                           placeholder="Your email">
+                                </div>
+
+                                <!-- Password -->
+                                <div class="form-group mb-5">
+                                    <label class="visually-hidden" for="modalSigninHorizontalPassword">
+                                        Enter your password
+                                    </label>
+                                    <input type="password" class="form-control" id="modalSigninHorizontalPassword"
+                                           placeholder="Enter your password">
+                                </div>
+
+                                <!-- Submit -->
+                                <button class="btn w-100 btn-primary" type="submit">
+                                    Sign in
+                                </button>
+
+                            </form>
+
+                            <!-- Text -->
+                            <p class="mb-0 fs-sm text-center text-muted">
+                                Don't have an account yet? <a data-bs-toggle="modal" href="#modalSignupHorizontal">Sign
+                                up</a>.
+                            </p>
+
+                        </div>
+                    </div>
+
+                </div> <!-- / .row -->
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block content %}
+    <!-- WELCOME -->
+    <section data-jarallax data-speed=".8" class="pt-5 pt-md-12 pb-12 pb-md-15 overlay overlay-primary overlay-80 jarallax"
+             style="background-image: url({% static 'brain.jpg' %});">
+
+        <!-- Content -->
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-8 text-center">
+
+                    <h1 class="justify-content-center text-white">Brain Busters</h1>
+                    <!-- Heading -->
+                    <div class="row justify-content-center mb-6"><img class="w-25" src="{% static 'logo.png' %}"></div>
+
+                    <!-- Button -->
+                    <a class="btn btn-pill btn-white shadow lift" href="#modalSigninHorizontal" data-bs-toggle="modal">
+                        Get Started
+                    </a>
+
+                </div>
+            </div> <!-- / .row -->
+        </div> <!-- / .container -->
+
+        <!-- Shape -->
+        <div class="position-absolute right-0 bottom-0 left-0">
+
+            <!-- Shape -->
+            <div class="position-relative shape shape-bottom shape-fluid-x text-white">
+                <svg viewBox="0 0 2880 250" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M720 125L2160 0h720v250H0V125h720z" fill="currentColor"/>
+                </svg>
+            </div>
+
+            <!-- Button -->
+            <div class="position-absolute center">
+                <a class="btn btn-light btn-rounded-circle lift" data-scroll href="#payItDown">
+                    <i class="fe fe-arrow-down"></i>
+                </a>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- HOW ? -->
+    <section class="pt-8 pt-md-11 pb-10" id="payItDown">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-10 col-lg-8 text-center">
+
+                    <!-- Badge -->
+                    <span class="badge rounded-pill bg-primary-soft mb-3">
+                  <span class="h6 text-uppercase">How ?</span>
+                </span>
+
+                    <!-- Heading -->
+                    <h1>
+                        <span class="text-primary">Apprenez</span> en 3 étapes.
+                    </h1>
+
+                    <!-- Text -->
+                    <p class="lead text-gray-700 mb-7 mb-md-9">
+                        Des quizz sur mesure bla bla bla... En pas longtemps bla bla bla...
+                    </p>
+
+                </div>
+            </div> <!-- / .row -->
+            <div class="row align-items-center">
+                <div class="col-12">
+                    <!-- List -->
+                    <div class="d-flex">
+
+                        <!-- Badge -->
+                        <div class="badge badge-lg badge-rounded-circle bg-primary-soft mt-1">
+                            <span>1</span>
+                        </div>
+
+                        <!-- Body -->
+                        <div class="ms-5">
+
+                            <!-- Heading -->
+                            <h3>
+                                Sign up
+                            </h3>
+
+                            <!-- Text -->
+                            <p class="text-gray-700 mb-6">
+                                It takes a few minutes to add your information and home's photos.
+                            </p>
+
+                        </div>
+
+                    </div>
+                    <div class="d-flex justify-content-end">
+
+                        <!-- Badge -->
+                        <div class="badge badge-lg badge-rounded-circle bg-primary-soft mt-1">
+                            <span>2</span>
+                        </div>
+
+                        <!-- Body -->
+                        <div class="ms-5">
+
+                            <!-- Heading -->
+                            <h3>
+                                List your homes
+                            </h3>
+
+                            <!-- Text -->
+                            <p class="text-gray-700 mb-6">
+                                Let us know where your homes are located and when they're available.
+                            </p>
+
+                        </div>
+
+                    </div>
+                    <div class="d-flex">
+
+                        <!-- Badge -->
+                        <div class="badge badge-lg badge-rounded-circle bg-primary-soft mt-1">
+                            <span>3</span>
+                        </div>
+
+                        <!-- Body -->
+                        <div class="ms-5">
+
+                            <!-- Heading -->
+                            <h3>
+                                Start welcoming guests
+                            </h3>
+
+                            <!-- Text -->
+                            <p class="text-gray-700 mb-0">
+                                Get ready for an influx of guests and easy passive income.
+                            </p>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div> <!-- / .row -->
+        </div> <!-- / .container -->
+    </section>
+
+    <!-- Numbers -->
+    <section>
+        <div class="container py-8 pt-md-11 pb-md-9 border-top border-bottom">
+            <div class="row">
+                <div class="col-12 col-md-8 col-lg-6">
+
+                    <!-- Preheading -->
+                    <h6 class="text-uppercase text-primary">
+                        Placement rates
+                    </h6>
+
+                    <!-- Heading -->
+                    <h2 class="mb-6 mb-md-8">
+                        Landkit is the leading job placement site with the highest rate of success of any tech job board.
+                    </h2>
+
+                    <!-- Stats -->
+                    <div class="d-flex">
+                        <div class="pe-5">
+                            <h3 class="mb-0">
+                                <span data-countup='{"startVal": 0}' data-to="74" data-aos data-aos-id="countup:in"></span>k
+                            </h3>
+                            <p class="text-gray-700 mb-0">
+                                Joueurs
+                            </p>
+                        </div>
+                        <div class="px-5">
+                            <h3 class="mb-0">
+                                <span data-countup='{"startVal": 0}' data-to="124" data-aos data-aos-id="countup:in"></span>k
+                            </h3>
+                            <p class="text-gray-700 mb-0">
+                                Quizz
+                            </p>
+                        </div>
+                        <div class="ps-5">
+                            <h3 class="mb-0">
+                                <span data-countup='{"startVal": 0, "decimalPlaces": 1}' data-to="1.9" data-aos data-aos-id="countup:in"></span>k
+                            </h3>
+                            <p class="text-gray-700 mb-0">
+                                Autre
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-12 col-md-4 col-lg-6">
+                    <div class="card mb-5">
+                        <div class="card-body">
+
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Points</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>Mark</td>
+                                        <td>Otto</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">2</th>
+                                        <td>Jacob</td>
+                                        <td>Thornton</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td>Larry</td>
+                                        <td>the Bird</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- / .row -->
+        </div> <!-- / .container -->
+    </section>
+
+    <!-- WHO ? -->
+    <section class="pt-8 pt-md-11">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-10 col-lg-8 text-center">
+
+                <!-- Badge -->
+                <span class="badge rounded-pill bg-primary-soft mb-3">
+              <span class="h6 text-uppercase">Who ?</span>
+            </span>
+
+                <!-- Heading -->
+                <h1>
+                    Our <span class="text-primary">team</span>.
+                </h1>
+
+                <!-- Text -->
+                <p class="lead text-gray-700 mb-7 mb-md-9">
+                    une phrase nul bla bla bla...
+                </p>
+
+            </div>
+        </div> <!-- / .row -->
+        <div class="row">
+            <div class="col-12 col-md-3">
+                <!-- Card -->
+                <div class="card card-border border-primary shadow-lg mb-6 mb-md-8 lift lift-lg">
+                    <div class="card-body text-center">
+
+                        <div class="avatar avatar-xxl mb-3">
+                            <img src="{% static 'Landkit/img/avatars/avatar-1.jpg' %}" alt="..."
+                                 class="avatar-img rounded-circle">
+                        </div>
+
+                        <!-- Heading -->
+                        <h4 class="fw-bold">
+                            Prénom
+                        </h4>
+
+                        <!-- Text -->
+                        <p class="text-gray-700 mb-5">
+                            rôle
+                        </p>
+
+                        <!-- Badge -->
+                        <span class="badge rounded-pill bg-dark-soft">
+                            <span class="h6 text-uppercase">
+                                1 truc ?
+                            </span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-3">
+                <!-- Card -->
+                <div class="card card-border border-warning shadow-lg mb-6 mb-md-8 lift lift-lg">
+                    <div class="card-body text-center">
+
+                        <div class="avatar avatar-xxl mb-3">
+                            <img src="{% static 'Landkit/img/avatars/avatar-1.jpg' %}" alt="..."
+                                 class="avatar-img rounded-circle">
+                        </div>
+
+                        <!-- Heading -->
+                        <h4 class="fw-bold">
+                            Prénom
+                        </h4>
+
+                        <!-- Text -->
+                        <p class="text-gray-700 mb-5">
+                            rôle
+                        </p>
+
+                        <!-- Badge -->
+                        <span class="badge rounded-pill bg-dark-soft">
+                            <span class="h6 text-uppercase">
+                                1 truc ?
+                            </span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-3">
+                <!-- Card -->
+                <div class="card card-border border-danger shadow-lg mb-6 mb-md-8 lift lift-lg">
+                    <div class="card-body text-center">
+
+                        <div class="avatar avatar-xxl mb-3">
+                            <img src="{% static 'Landkit/img/avatars/avatar-1.jpg' %}" alt="..."
+                                 class="avatar-img rounded-circle">
+                        </div>
+
+                        <!-- Heading -->
+                        <h4 class="fw-bold">
+                            Prénom
+                        </h4>
+
+                        <!-- Text -->
+                        <p class="text-gray-700 mb-5">
+                            rôle
+                        </p>
+
+                        <!-- Badge -->
+                        <span class="badge rounded-pill bg-dark-soft">
+                            <span class="h6 text-uppercase">
+                                1 truc ?
+                            </span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-3">
+                <!-- Card -->
+                <div class="card card-border border-info shadow-lg mb-6 mb-md-8 lift lift-lg">
+                    <div class="card-body text-center">
+
+                        <div class="avatar avatar-xxl mb-3">
+                            <img src="{% static 'Landkit/img/avatars/avatar-1.jpg' %}" alt="..."
+                                 class="avatar-img rounded-circle">
+                        </div>
+
+                        <!-- Heading -->
+                        <h4 class="fw-bold">
+                            Prénom
+                        </h4>
+
+                        <!-- Text -->
+                        <p class="text-gray-700 mb-5">
+                            rôle
+                        </p>
+
+                        <!-- Badge -->
+                        <span class="badge rounded-pill bg-dark-soft">
+                            <span class="h6 text-uppercase">
+                                1 truc ?
+                            </span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- / .row -->
+    </div>
+</section>
+{% endblock %}
