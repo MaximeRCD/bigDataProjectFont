@@ -1,4 +1,4 @@
-FROM dockerproxy.repos.tech.orange/bitnami/python:3.9.15-debian-11-r12
+FROM bitnami/python:3.9.15-debian-11-r12
 COPY ./big_data_project ./
 RUN pip install --upgrade pip 
 COPY requirements.txt requirements.txt
