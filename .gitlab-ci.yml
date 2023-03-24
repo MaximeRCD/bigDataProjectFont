@@ -32,6 +32,6 @@ deploy:deploy_front:
   stage: deploy
   extends: .gcp_login
   script:
-    - gcloud run deploy prometheus --image gcr.io/$GCP_PROJECT_ID/front:0.1 --region $GCP_REGION --platform managed --allow-unauthenticated --port 8000
+    - gcloud run deploy front --image gcr.io/$GCP_PROJECT_ID/front:0.1 --region $GCP_REGION --platform managed --allow-unauthenticated --port 8000
   when: manual  
 
