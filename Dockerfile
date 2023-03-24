@@ -3,7 +3,7 @@ FROM bitnami/python:3.9.15-debian-11-r12
 WORKDIR /usr/src/app/big_data_project
 
 RUN pip install --upgrade pip 
-COPY /big_data_project/requirements.txt requirements.txt
+COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt 
 # copy project
 COPY . /usr/src/app
