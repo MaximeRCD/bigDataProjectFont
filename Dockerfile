@@ -1,4 +1,4 @@
-FROM dockerproxy.repos.tech.orange/python:3.9-slim-buster
+FROM python:3.9-slim-buster
 WORKDIR /app
 COPY ./big_data_project .
 RUN pip install --upgrade pip 
