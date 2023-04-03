@@ -20,6 +20,7 @@ import landing.views
 import dashboard.views
 import play.views
 import user_settings.views
+import authenticate.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,5 +29,8 @@ urlpatterns = [
     path('dashboard/', dashboard.views.dashboard, name="dashboard"),
     path('play/<str:step>', play.views.play, name="play"),
     path('user_settings/<str:menu>', user_settings.views.user_settings, name="user_settings"),
-    re_path(r'^get_questions/(?P<themes>[\d,]+)/$', play.views.get_questions, name='get_questions')
+    re_path(r'^get_questions/(?P<themes>[\d,]+)/$', play.views.get_questions, name='get_questions'),
+    path('signin/', authenticate.views.SigninPageView.as_view(), name="signin"),
+    path('signup/', authenticate.views.SignupPageView.as_view(), name="signup"),
+    path('signout/', authenticate.views.signout_user, name="signout")
 ]

@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic import View
 from . import forms
-from livechat import settings
+from BigDataProject import settings
 
 # Create your views here.
 

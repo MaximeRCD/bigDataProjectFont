@@ -64,7 +64,8 @@ TEMPLATES = [
             BASE_DIR / 'landing/templates',
             BASE_DIR / 'dashboard/templates',
             BASE_DIR / 'play/templates',
-            BASE_DIR / 'user_settings/templates'
+            BASE_DIR / 'user_settings/templates',
+            BASE_DIR / 'authenticate/templates'
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -135,3 +136,5 @@ STATICFILES_DIRS = ['static/']
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = 'dashboard'
+
+AUTH_USER_MODEL = 'authenticate.User'
