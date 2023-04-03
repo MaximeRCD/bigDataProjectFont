@@ -32,5 +32,6 @@ urlpatterns = [
     re_path(r'^get_questions/(?P<themes>[\d,]+)/$', play.views.get_questions, name='get_questions'),
     path('signin/', authenticate.views.SigninPageView.as_view(), name="signin"),
     path('signup/', authenticate.views.SignupPageView.as_view(), name="signup"),
-    path('signout/', authenticate.views.signout_user, name="signout")
+    path('signout/', authenticate.views.signout_user, name="signout"),
+    path('errors/<int:code>', landing.views.errors, name="errors")
 ]

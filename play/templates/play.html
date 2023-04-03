@@ -1,13 +1,15 @@
 {% extends 'base_dashboard.html' %}
+{% load redirect_tags %}
 {% load static %}
-
 {% block header_title %}
     {% if step == 'themes' %}
         Choose themes
-    {% elif step == 'wait-for-quizz' %}
-        Start your quizz
-    {% elif step == 'quizz' %}
-        Quizz
+    {% elif step == 'wait-for-quiz' %}
+        Start your quiz
+    {% elif step == 'quiz' %}
+        Quiz
+    {% else %}
+        {% redirect_to '404' %}
     {% endif %}
 {% endblock %}
 
@@ -117,7 +119,7 @@
                 </div>
             </div>
         </form>
-    {% elif step == 'wait-for-quizz' %}
+    {% elif step == 'wait-for-quiz' %}
         <div class="text-center">
             <!-- img -->
             <img src="{%  static 'Geek/images/svg/survey-img.svg' %}" alt="" class="img-fluid">

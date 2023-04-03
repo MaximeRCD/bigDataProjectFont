@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'dashboard',
     'play',
     'user_settings',
-    'authenticate'
+    'authenticate',
+    'custom_tags'
 ]
 
 MIDDLEWARE = [

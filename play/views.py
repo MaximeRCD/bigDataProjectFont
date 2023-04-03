@@ -7,15 +7,15 @@ import requests
 
 
 def play(request, step):
+    if step == "wait-for-quiz" and not 'quiz' in request.session:
+        return redirect('play', step="themes")
     if request.method == "POST" and step == "themes":
         checked_boxes = [request.POST[f'theme{i}'] for i in range(1, 5) if request.POST.get(f'theme{i}')]
         response = requests.get('http://127.0.0.1:8000/get_questions/'+','.join(checked_boxes)+'/')
         request.session['quiz'] = {"state": "not_started", "id": response.json()}  # in_progress, terminated
         print(request.session['quiz'])
         return redirect('play', step="wait-for-quiz")
-    if request.method == "POST" and step == "wait-for-quiz":
-        if not request.session['quiz']:
-            return redirect('play', step="themes")
+    elif request.method == "POST" and step == "wait-for-quiz":
         request.session['quiz'].state = "in_progress"  # not_started, terminated
         print(request.session['quiz'])
     return render(request, 'play.html', context={'step': step, 'themes': [{'id': 1, 'name': 'themes1'}, {'id': 2, 'name': 'themes2'}, {'id': 3, 'name': 'themes3'}]})
