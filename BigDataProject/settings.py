@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'landing',
     'dashboard',
     'play',
-    'user_settings'
+    'user_settings',
+    'authenticate'
 ]
 
 MIDDLEWARE = [
