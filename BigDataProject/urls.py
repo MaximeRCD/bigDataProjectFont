@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, re_path
 
 import landing.views
 import dashboard.views
@@ -24,7 +24,9 @@ import user_settings.views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', landing.views.landing),
+    path('home/', landing.views.landing, name='home'),
     path('dashboard/', dashboard.views.dashboard, name="dashboard"),
-    path('play/', play.views.play, name="play"),
-    path('user_settings/', user_settings.views.user_settings, name="user_settings")
+    path('play/<str:step>', play.views.play, name="play"),
+    path('user_settings/<str:menu>', user_settings.views.user_settings, name="user_settings"),
+    re_path(r'^get_questions/(?P<themes>[\d,]+)/$', play.views.get_questions, name='get_questions')
 ]

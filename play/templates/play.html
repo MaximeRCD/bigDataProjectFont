@@ -1,293 +1,138 @@
 {% extends 'base_dashboard.html' %}
 {% load static %}
 
-{% block header_pretitle %}Select themes{% endblock %}
-{% block header_title %}Play{% endblock %}
+{% block header_title %}
+    {% if step == 'themes' %}
+        Choose themes
+    {% elif step == 'wait-for-quizz' %}
+        Start your quizz
+    {% elif step == 'quizz' %}
+        Quizz
+    {% endif %}
+{% endblock %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-4">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row align-items-center">
-                        <div class="col-auto">
+    {% if step == 'themes' %}
+        <form method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-6 col-12 col-lg-4 mb-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-auto">
 
-                            <!-- Avatar -->
-                            <div class="avatar avatar-4by3">
-                                <img src="{% static 'Dashkit/img/avatars/projects/project-1.jpg' %}" alt="..."
-                                     class="avatar-img rounded">
-                            </div>
+                                    <!-- Avatar -->
+                                    <div class="avatar avatar-4by3">
+                                        <img src="{% static 'Dashkit/img/avatars/projects/project-1.jpg' %}" alt="..."
+                                             class="avatar-img rounded">
+                                    </div>
 
+                                </div>
+                                <div class="col ms-n2">
+                                    <!-- Title -->
+                                    <h4 class="mb-1">Thème 1</h4>
+                                </div>
+                                <div class="col-auto">
+                                    <input name="theme1" class="form-check-input" type="checkbox" id="theme1" value="1">
+                                </div>
+                            </div> <!-- / .row -->
                         </div>
-                        <div class="col ms-n2">
+                    </div>
+                </div>
+                <div class="col-md-6 col-12 col-lg-4 mb-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-auto">
 
-                            <!-- Title -->
-                            <h4 class="mb-1">Homepage Redesign</h4>
+                                    <!-- Avatar -->
+                                    <div class="avatar avatar-4by3">
+                                        <img src="{% static 'Dashkit/img/avatars/projects/project-1.jpg' %}" alt="..."
+                                             class="avatar-img rounded">
+                                    </div>
 
-                            <!-- Text -->
-                            <p class="small text-muted mb-0">
-                                <time datetime="2018-06-21">Updated 2hr ago</time>
-                            </p>
-
+                                </div>
+                                <div class="col ms-n2">
+                                    <!-- Title -->
+                                    <h4 class="mb-1">Thème 2</h4>
+                                </div>
+                                <div class="col-auto">
+                                    <input name="theme2" class="form-check-input" type="checkbox" id="theme2" value="2">
+                                </div>
+                            </div> <!-- / .row -->
                         </div>
-                        <div class="col-auto">
-                            <input class="form-check-input" type="checkbox" id="checklistOne">
+                    </div>
+                </div>
+                <div class="col-md-6 col-12 col-lg-4 mb-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-auto">
+                                    <!-- Avatar -->
+                                    <div class="avatar avatar-4by3">
+                                        <img src="{% static 'Dashkit/img/avatars/projects/project-1.jpg' %}" alt="..."
+                                             class="avatar-img rounded">
+                                    </div>
+                                </div>
+                                <div class="col ms-n2">
+                                    <!-- Title -->
+                                    <h4 class="mb-1">Thème 3</h4>
+                                </div>
+                                <div class="col-auto">
+                                    <input name="theme3" class="form-check-input" type="checkbox" id="theme3" value="3">
+                                </div>
+                            </div> <!-- / .row -->
                         </div>
-                    </div> <!-- / .row -->
+                    </div>
+                </div>
+                <div class="col-md-6 col-12 col-lg-4 mb-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-auto">
+
+                                    <!-- Avatar -->
+                                    <div class="avatar avatar-4by3">
+                                        <img src="{% static 'Dashkit/img/avatars/projects/project-1.jpg' %}" alt="..."
+                                             class="avatar-img rounded">
+                                    </div>
+
+                                </div>
+                                <div class="col ms-n2">
+                                    <!-- Title -->
+                                    <h4 class="mb-1">Thème 4</h4>
+                                </div>
+                                <div class="col-auto">
+                                    <input name="theme4" class="form-check-input" type="checkbox" id="theme4" value="4">
+                                </div>
+                            </div> <!-- / .row -->
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-4">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row align-items-center">
-                        <div class="col-auto">
-
-                            <!-- Avatar -->
-                            <div class="avatar avatar-4by3">
-                                <img src="{% static 'Dashkit/img/avatars/projects/project-1.jpg' %}" alt="..."
-                                     class="avatar-img rounded">
-                            </div>
-
-                        </div>
-                        <div class="col ms-n2">
-
-                            <!-- Title -->
-                            <h4 class="mb-1">Homepage Redesign</h4>
-
-                            <!-- Text -->
-                            <p class="small text-muted mb-0">
-                                <time datetime="2018-06-21">Updated 2hr ago</time>
-                            </p>
-
-                        </div>
-                        <div class="col-auto">
-                            <input class="form-check-input" type="checkbox" id="checklistOne">
-                        </div>
-                    </div> <!-- / .row -->
+            <div class="row justify-content-center">
+                <div class="col-md-3 col-12">
+                    <button type="submit" class="btn btn-primary mb-2 lift">Create Quizz</button>
                 </div>
             </div>
-        </div>
-        <div class="col-4">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row align-items-center">
-                        <div class="col-auto">
-
-                            <!-- Avatar -->
-                            <div class="avatar avatar-4by3">
-                                <img src="{% static 'Dashkit/img/avatars/projects/project-1.jpg' %}" alt="..."
-                                     class="avatar-img rounded">
-                            </div>
-
-                        </div>
-                        <div class="col ms-n2">
-
-                            <!-- Title -->
-                            <h4 class="mb-1">Homepage Redesign</h4>
-
-                            <!-- Text -->
-                            <p class="small text-muted mb-0">
-                                <time datetime="2018-06-21">Updated 2hr ago</time>
-                            </p>
-
-                        </div>
-                        <div class="col-auto">
-                            <input class="form-check-input" type="checkbox" id="checklistOne">
-                        </div>
-                    </div> <!-- / .row -->
-                </div>
+        </form>
+    {% elif step == 'wait-for-quizz' %}
+        <div class="text-center">
+            <!-- img -->
+            <img src="{%  static 'Geek/images/svg/survey-img.svg' %}" alt="" class="img-fluid">
+            <!-- text -->
+            <div class="px-lg-18">
+                <h1>Welcome to Quiz</h1>
+                <p class="mb-0">Engage live or asynchronously with quiz and poll questions that participants complete at their own pace.</p>
+            <form method="post">
+                <button name="start_quiz" class="btn btn-primary mt-4">Start Your Quiz</button>
+            </form>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-4">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row align-items-center">
-                        <div class="col-auto">
+    {% elif step == 'quizz' %}
+        yo le rap
+    {% endif %}
 
-                            <!-- Avatar -->
-                            <div class="avatar avatar-4by3">
-                                <img src="{% static 'Dashkit/img/avatars/projects/project-1.jpg' %}" alt="..."
-                                     class="avatar-img rounded">
-                            </div>
-
-                        </div>
-                        <div class="col ms-n2">
-
-                            <!-- Title -->
-                            <h4 class="mb-1">Homepage Redesign</h4>
-
-                            <!-- Text -->
-                            <p class="small text-muted mb-0">
-                                <time datetime="2018-06-21">Updated 2hr ago</time>
-                            </p>
-
-                        </div>
-                        <div class="col-auto">
-                            <input class="form-check-input" type="checkbox" id="checklistOne">
-                        </div>
-                    </div> <!-- / .row -->
-                </div>
-            </div>
-        </div>
-        <div class="col-4">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row align-items-center">
-                        <div class="col-auto">
-
-                            <!-- Avatar -->
-                            <div class="avatar avatar-4by3">
-                                <img src="{% static 'Dashkit/img/avatars/projects/project-1.jpg' %}" alt="..."
-                                     class="avatar-img rounded">
-                            </div>
-
-                        </div>
-                        <div class="col ms-n2">
-
-                            <!-- Title -->
-                            <h4 class="mb-1">Homepage Redesign</h4>
-
-                            <!-- Text -->
-                            <p class="small text-muted mb-0">
-                                <time datetime="2018-06-21">Updated 2hr ago</time>
-                            </p>
-
-                        </div>
-                        <div class="col-auto">
-                            <input class="form-check-input" type="checkbox" id="checklistOne">
-                        </div>
-                    </div> <!-- / .row -->
-                </div>
-            </div>
-        </div>
-        <div class="col-4">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row align-items-center">
-                        <div class="col-auto">
-
-                            <!-- Avatar -->
-                            <div class="avatar avatar-4by3">
-                                <img src="{% static 'Dashkit/img/avatars/projects/project-1.jpg' %}" alt="..."
-                                     class="avatar-img rounded">
-                            </div>
-
-                        </div>
-                        <div class="col ms-n2">
-
-                            <!-- Title -->
-                            <h4 class="mb-1">Homepage Redesign</h4>
-
-                            <!-- Text -->
-                            <p class="small text-muted mb-0">
-                                <time datetime="2018-06-21">Updated 2hr ago</time>
-                            </p>
-
-                        </div>
-                        <div class="col-auto">
-                            <input class="form-check-input" type="checkbox" id="checklistOne">
-                        </div>
-                    </div> <!-- / .row -->
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-4">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row align-items-center">
-                        <div class="col-auto">
-
-                            <!-- Avatar -->
-                            <div class="avatar avatar-4by3">
-                                <img src="{% static 'Dashkit/img/avatars/projects/project-1.jpg' %}" alt="..."
-                                     class="avatar-img rounded">
-                            </div>
-
-                        </div>
-                        <div class="col ms-n2">
-
-                            <!-- Title -->
-                            <h4 class="mb-1">Homepage Redesign</h4>
-
-                            <!-- Text -->
-                            <p class="small text-muted mb-0">
-                                <time datetime="2018-06-21">Updated 2hr ago</time>
-                            </p>
-
-                        </div>
-                        <div class="col-auto">
-                            <input class="form-check-input" type="checkbox" id="checklistOne">
-                        </div>
-                    </div> <!-- / .row -->
-                </div>
-            </div>
-        </div>
-        <div class="col-4">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row align-items-center">
-                        <div class="col-auto">
-
-                            <!-- Avatar -->
-                            <div class="avatar avatar-4by3">
-                                <img src="{% static 'Dashkit/img/avatars/projects/project-1.jpg' %}" alt="..."
-                                     class="avatar-img rounded">
-                            </div>
-
-                        </div>
-                        <div class="col ms-n2">
-
-                            <!-- Title -->
-                            <h4 class="mb-1">Homepage Redesign</h4>
-
-                            <!-- Text -->
-                            <p class="small text-muted mb-0">
-                                <time datetime="2018-06-21">Updated 2hr ago</time>
-                            </p>
-
-                        </div>
-                        <div class="col-auto">
-                            <input class="form-check-input" type="checkbox" id="checklistOne">
-                        </div>
-                    </div> <!-- / .row -->
-                </div>
-            </div>
-        </div>
-        <div class="col-4">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row align-items-center">
-                        <div class="col-auto">
-
-                            <!-- Avatar -->
-                            <div class="avatar avatar-4by3">
-                                <img src="{% static 'Dashkit/img/avatars/projects/project-1.jpg' %}" alt="..."
-                                     class="avatar-img rounded">
-                            </div>
-
-                        </div>
-                        <div class="col ms-n2">
-
-                            <!-- Title -->
-                            <h4 class="mb-1">Homepage Redesign</h4>
-
-                            <!-- Text -->
-                            <p class="small text-muted mb-0">
-                                <time datetime="2018-06-21">Updated 2hr ago</time>
-                            </p>
-
-                        </div>
-                        <div class="col-auto">
-                            <input class="form-check-input" type="checkbox" id="checklistOne">
-                        </div>
-                    </div> <!-- / .row -->
-                </div>
-            </div>
-        </div>
-    </div>
+    <script src="{% static 'quiz.js' %}"></script>
 {% endblock %}

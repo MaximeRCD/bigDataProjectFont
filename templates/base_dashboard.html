@@ -16,127 +16,118 @@
     <meta name="msapplication-config" content="{% static 'favicon/browserconfig.xml' %}">
     <meta name="theme-color" content="#ffffff">
 
-    <!-- Libs CSS -->
-    <link rel="stylesheet" href="{% static 'Dashkit/css/libs.bundle.css' %}"/>
-    <!-- Theme CSS -->
-    <link rel="stylesheet" href="{% static 'Dashkit/css/theme.bundle.css' %}"/>
+    <link href="{% static 'Geek/fonts/feather/feather.css' %}" rel="stylesheet">
+    <link href="{% static 'Geek/libs/bootstrap-icons/font/bootstrap-icons.css' %}" rel="stylesheet"/>
+    <link href="{% static 'Geek/libs/@mdi/font/css/materialdesignicons.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'Geek/libs/simplebar/dist/simplebar.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'Geek/css/theme.min.css' %}">
 
     <!-- Title -->
     <title>BrainBusters</title>
 </head>
 <body>
-<!-- NAVIGATION -->
-<nav class="navbar navbar-vertical fixed-start navbar-expand-md navbar-light" id="sidebar">
-    <div class="container-fluid">
-
-        <!-- Toggler -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarCollapse"
-                aria-controls="sidebarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <!-- Brand -->
-        <a class="navbar-brand" href="">
-            <img src="{% static 'logo.png' %}" class="navbar-brand-img mx-auto" alt="..."
-                 style="max-height: 6rem!important;">
-        </a>
-
-        <!-- Collapse -->
-        <div class="collapse navbar-collapse" id="sidebarCollapse">
-
-            <!-- Navigation -->
-            <ul class="navbar-nav">
+<div id="db-wrapper">
+    <!-- NAVIGATION -->
+    <nav class="navbar-vertical navbar navbar-dark">
+        <div class="vh-100 mt-5" data-simplebar>
+            <!-- Brand logo -->
+            <a class="navbar-brand-img p-12" href="{% url 'home' %}">
+                <img class="w-25" src="{% static 'logo.png' %}" alt="">
+            </a>
+            <!-- Navbar nav -->
+            <ul class="navbar-nav flex-column" id="sideNavbar">
                 {% if 'dashboard' in request.path %}
                     <li class="nav-item">
                         <a class="nav-link active" href="{% url 'dashboard' %}">
-                            <i class="fe fe-grid"></i> Dashboard
+                            <i class="nav-icon fe fe-grid me-2"></i> Dashboard
                         </a>
                     </li>
                 {% else %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'dashboard' %}">
-                            <i class="fe fe-grid"></i> Dashboard
+                            <i class="nav-icon me-2 fe fe-grid"></i> Dashboard
                         </a>
                     </li>
                 {% endif %}
-
                 {% if 'play' in request.path %}
                     <li class="nav-item">
-                        <a class="nav-link active" href="{% url 'play' %}">
-                            <i class="fe fe-play-circle"></i> Play
+                        <a class="nav-link active" href="{% url 'play' 'themes' %}">
+                            <i class="nav-icon me-2 fe fe-play-circle"></i> Play
                         </a>
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'play' %}">
-                            <i class="fe fe-play-circle"></i> Play
+                        <a class="nav-link" href="{% url 'play' 'themes' %}">
+                            <i class="nav-icon me-2 fe fe-play-circle"></i> Play
                         </a>
                     </li>
                 {% endif %}
-
                 {% if 'user_settings' in request.path %}
                     <li class="nav-item">
-                        <a class="nav-link active" href="{% url 'user_settings' %}">
-                            <i class="fe fe-user"></i> User_settings
+                        <a class="nav-link active" href="{% url 'user_settings' 'general' %}">
+                            <i class="nav-icon me-2 fe fe-user"></i> Settings
                         </a>
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'user_settings' %}">
-                            <i class="fe fe-user"></i> User_settings
+                        <a class="nav-link" href="{% url 'user_settings' 'general' %}">
+                            <i class="nav-icon me-2 fe fe-user"></i> Settings
                         </a>
                     </li>
                 {% endif %}
-                <li class="navbar-user nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="fe fe-log-out"></i> Log Out
+                <!-- Nav item -->
+                <li class="nav-item">
+                    <div class="navbar-heading">_</div>
+                </li>
+                <!-- Nav item -->
+                <li class="nav-item">
+                    <a class="nav-link "
+                       href="#">
+                        <i class="nav-icon fe fe-log-out me-2"></i> Sign out
                     </a>
                 </li>
             </ul>
-
-        </div> <!-- / .navbar-collapse -->
-
-    </div>
-</nav>
-
-<div class="main-content">
-
-    <!-- HEADER -->
-    <div class="header">
-        <div class="container-fluid">
-
-            <!-- Body -->
-            <div class="header-body">
-                <div class="row align-items-end">
-                    <div class="col">
-
-                        <!-- Pretitle -->
-                        <h6 class="header-pretitle">
-                            {% block header_pretitle %}{% endblock %}
-                        </h6>
-
-                        <!-- Title -->
-                        <h1 class="header-title">
-                            {% block header_title %}{% endblock %}
-                        </h1>
-
-                    </div>
-                </div> <!-- / .row -->
-            </div> <!-- / .header-body -->
-
         </div>
-    </div> <!-- / .header -->
-    <div class="container-fluid">
-        {% block content %}
-        {% endblock %}
-    </div>
+    </nav>
+    <main id="page-content">
+        <div class="header">
+            <!-- navbar -->
+            <nav class="navbar-default navbar navbar-expand-lg">
+                <a id="nav-toggle" href="#">
+                    <i class="fe fe-menu"></i>
+                </a>
+                <div class="ms-lg-3 d-none d-md-none d-lg-block">
+                    <h1 class="mb-0 h2 fw-bold">{% block header_title %}{% endblock %}</h1>
+                </div>
+                <!--Navbar nav -->
+                <div class="ms-auto d-flex">
+                    <a href="#" class="form-check form-switch theme-switch btn btn-light btn-icon rounded-circle ">
+                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                        <label class="form-check-label" for="flexSwitchCheckDefault"></label>
+                    </a>
+                </div>
+            </nav>
+        </div>
+        <section class="p-4 container-fluid">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-12">
+
+                </div>
+            </div>
+            {% block content %}{% endblock %}
+        </section>
+    </main>
 </div>
-
 <!-- JAVASCRIPT -->
-<!-- Vendor JS -->
-<script src="{% static 'Dashkit/js/vendor.bundle.js' %}"></script>
-
+<!-- Libs JS -->
+<script src="{% static 'Geek/libs/jquery/dist/jquery.min.js' %}"></script>
+<script src="{% static 'Geek/libs/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'Geek/libs/simplebar/dist/simplebar.min.js' %}"></script>
 <!-- Theme JS -->
-<script src="{% static 'Dashkit/js/theme.bundle.js' %}"></script>
+<script src="{% static 'Geek/js/theme.min.js' %}"></script>
+<script src="{% static 'Geek/libs/apexcharts/dist/apexcharts.min.js' %}"></script>
+<script src="{% static 'Geek/js/vendors/chart.js' %}"></script>
+<script src="{% static 'Geek/libs/flatpickr/dist/flatpickr.min.js' %}"></script>
+<script src="{% static 'Geek/js/vendors/flatpickr.js' %}"></script>
 </body>
 </html>
