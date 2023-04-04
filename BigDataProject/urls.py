@@ -30,6 +30,7 @@ urlpatterns = [
     path('play/<str:step>', play.views.play, name="play"),
     path('user_settings/<str:menu>', user_settings.views.user_settings, name="user_settings"),
     re_path(r'^get_questions/(?P<themes>[\d,]+)/$', play.views.get_questions, name='get_questions'),
+    path('fake_model/', play.views.fake_model, name="fake_model"),
     path('signin/', authenticate.views.SigninPageView.as_view(), name="signin"),
     path('signup/', authenticate.views.SignupPageView.as_view(), name="signup"),
     path('signout/', authenticate.views.signout_user, name="signout")
