@@ -1,6 +1,10 @@
 from django.db import models
 
-# Create your models here.
+# Create your models here
+
+
+class Quiz(models.Model):
+    quiz_id = models.IntegerField()
 
 
 class Theme(models.Model):
@@ -14,6 +18,7 @@ class Theme(models.Model):
 class Question(models.Model):
     theme = models.ForeignKey(Theme, on_delete=models.CASCADE)
     text = models.CharField(max_length=500)
+    quiz_id = models.ForeignKey(Quiz, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.text
