@@ -54,7 +54,8 @@ function onRecordButtonClick(event) {
                     toast.show();
                 }
                 else {
-                    document.getElementById(recordButton.getAttribute('answer_name') + data.answer).checked = true
+                    document.getElementById(recordButton.getAttribute('answer_name') + data.answer).checked = true;
+                    document.getElementById('nextQ'+recordButton.getAttribute('answer_name')[1]).classList.remove('disabled');
                 }
             })
             .catch((error) => {
@@ -64,8 +65,13 @@ function onRecordButtonClick(event) {
 }
 
 function onAnswerButtonClick(event) {
-    const answerButton = event.target;
-    userResponse = answerButton.id[-1];
+    if (modelResponse == null) {
+        event.target.checked = false;
+    }
+    else {
+        const answerButton = event.target;
+        userResponse = answerButton.id[-1];
+    }
 }
 
 for (let i = 0; i < recordButtons.length; i++) {
