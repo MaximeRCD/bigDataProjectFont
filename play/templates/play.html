@@ -178,21 +178,32 @@
                                             <h3 class="mb-3">{{ question.text }}</h3>
                                             {% for answer in question.answer_set.all %}
                                                 <div class="d-grid mb-2" role="group" aria-label="Basic radio toggle button group">
-                                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio{{ forloop.parentloop.counter }}{{ forloop.counter }}" checked="">
-                                                    <label class="btn btn-outline-secondary text-start" for="btnradio{{ forloop.parentloop.counter }}{{ forloop.counter }}">{{ answer.text }}</label>
+                                                    <input type="radio" class="btn-check" name="btnradio" id="q{{ forloop.parentloop.counter }}a{{ forloop.counter }}" checked="">
+                                                    <label class="btn btn-outline-secondary text-start" for="q{{ forloop.parentloop.counter }}a{{ forloop.counter }}">{{ answer.text }}</label>
                                                 </div>
                                             {% endfor %}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-between">
-                                    <button answer_name="flexRadioDefault" class="btn btn-primary recordButton"><i class="fe fe-mic"></i></button>
+                                    <button answer_name="q{{ forloop.counter }}a" class="btn btn-primary recordButton"><i class="fe fe-mic"></i></button>
                                     <button class="btn btn-primary" onclick="courseForm.next()">Next <i class="fe fe-arrow-right"></i></button>
                                 </div>
                             </div>
                         {% endfor %}
                     </form>
                 {% endfor %}
+            </div>
+        </div>
+
+        <div aria-live="polite" aria-atomic="true" style="top: 10px; right: 10px; position: absolute; min-height: 200px;">
+            <div class="toast align-items-center text-white bg-warning border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        Problem
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
             </div>
         </div>
     {% elif step == 'results' %}

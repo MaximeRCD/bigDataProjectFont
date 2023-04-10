@@ -1,31 +1,39 @@
 const recordButtons = document.getElementsByClassName('recordButton');
-const audioPlayer = document.getElementById('audioPlayer');
-
+const answerButtons = document.getElementsByClassName('btn-check');
 let recorder;
 let stream;
+let modelResponse, userResponse;
 
 async function startRecording(recordButton) {
     stream = await navigator.mediaDevices.getUserMedia({audio: true});
     recorder = new MediaRecorder(stream);
     recorder.onstart = () => {
-        recordButton.innerHTML = '<span class="spinner-grow spinner-grow-sm text-danger" role="status" aria-hidden="true"></span>';
+        let spinner = document.createElement('span');
+        spinner.setAttribute('class', 'spinner-grow spinner-grow-sm text-danger');
+        spinner.setAttribute('role', 'status');
+        spinner.setAttribute('aria-hidden', 'true');
+        recordButton.firstElementChild.remove();
+        recordButton.appendChild(spinner);
     };
     recorder.start();
 }
 
 function onRecordButtonClick(event) {
-    const recordButton = event.target; // L'objet qui a déclenché l'événement
+    let recordButton = event.target; // L'objet qui a déclenché l'événement
+    if (recordButton.tagName.toLowerCase() === 'span' || recordButton.tagName.toLowerCase() === 'i')
+        recordButton = recordButton.parentNode;
+
     if (!recorder || recorder.state !== 'recording') {
         startRecording(recordButton);
     } else if (recorder.state === 'recording') {
         recorder.stop();
-        recordButton.innerHTML = '';
-        recordButton.innerHTML = '<i class="fe fe-mic"></i>';
         recorder.ondataavailable = (e) => {
             const audioURL = URL.createObjectURL(e.data);
             console.log(audioURL);
         };
         stream.getTracks().forEach((track) => track.stop());
+        recorder = null;
+        stream = null;
         fetch('/fake_model/')
             .then((response) => {
                 if (!response.ok) {
@@ -34,8 +42,20 @@ function onRecordButtonClick(event) {
                 return response.json();
             })
             .then((data) => {
-                console.log(data);
-                document.getElementById(recordButton.getAttribute('answer_name') + data.answer).checked = true;
+                let icon = document.createElement('i');
+                icon.setAttribute('class', 'fe fe-mic');
+                recordButton.firstElementChild.remove();
+                recordButton.appendChild(icon);
+                modelResponse = data.answer;
+
+                if (!document.getElementById(recordButton.getAttribute('answer_name') + data.answer)){
+                    let toastEl = document.querySelector('.toast');
+                    let toast = new bootstrap.Toast(toastEl);
+                    toast.show();
+                }
+                else {
+                    document.getElementById(recordButton.getAttribute('answer_name') + data.answer).checked = true
+                }
             })
             .catch((error) => {
                 console.error('Erreur lors de la requête à l\'API:', error);
@@ -43,6 +63,15 @@ function onRecordButtonClick(event) {
     }
 }
 
+function onAnswerButtonClick(event) {
+    const answerButton = event.target;
+    userResponse = answerButton.id[-1];
+}
+
 for (let i = 0; i < recordButtons.length; i++) {
     recordButtons[i].addEventListener('click', onRecordButtonClick);
+}
+
+for (let i = 0; i < answerButtons.length; i++) {
+    answerButtons[i].addEventListener('click', onAnswerButtonClick);
 }
