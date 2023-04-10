@@ -178,7 +178,7 @@
                                             <h3 class="mb-3">{{ question.text }}</h3>
                                             {% for answer in question.answer_set.all %}
                                                 <div class="d-grid mb-2" role="group" aria-label="Basic radio toggle button group">
-                                                    <input type="radio" class="btn-check" name="btnradio" id="q{{ forloop.parentloop.counter }}a{{ forloop.counter }}" checked="">
+                                                    <input type="radio" class="btn-check" name="q{{ forloop.parentloop.counter }}" id="q{{ forloop.parentloop.counter }}a{{ forloop.counter }}">
                                                     <label class="btn btn-outline-secondary text-start" for="q{{ forloop.parentloop.counter }}a{{ forloop.counter }}">{{ answer.text }}</label>
                                                 </div>
                                             {% endfor %}
@@ -187,7 +187,7 @@
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <button answer_name="q{{ forloop.counter }}a" class="btn btn-primary recordButton"><i class="fe fe-mic"></i></button>
-                                    <button id="nextQ{{ forloop.counter }}" class="btn btn-primary disabled" onclick="courseForm.next()">Next <i class="fe fe-arrow-right"></i></button>
+                                    <button id="nextQ{{ forloop.counter }}" class="btn btn-primary disabled" onclick="resetAnswer();courseForm.next();">Next <i class="fe fe-arrow-right"></i></button>
                                 </div>
                             </div>
                         {% endfor %}

@@ -19,9 +19,16 @@ async function startRecording(recordButton) {
 }
 
 function onRecordButtonClick(event) {
-    let recordButton = event.target; // L'objet qui a déclenché l'événement
+    let recordButton = event.target;
     if (recordButton.tagName.toLowerCase() === 'span' || recordButton.tagName.toLowerCase() === 'i')
         recordButton = recordButton.parentNode;
+
+    let spinner = document.createElement('span');
+    spinner.setAttribute('class', 'spinner-border spinner-grow-sm text-light');
+    spinner.setAttribute('role', 'status');
+    spinner.setAttribute('aria-hidden', 'true');
+    recordButton.firstElementChild.remove();
+    recordButton.appendChild(spinner);
 
     if (!recorder || recorder.state !== 'recording') {
         startRecording(recordButton);
@@ -69,9 +76,21 @@ function onAnswerButtonClick(event) {
         event.target.checked = false;
     }
     else {
-        const answerButton = event.target;
-        userResponse = answerButton.id[-1];
+        userResponse = event.target.getAttribute('id')[3];
+        if (document.getElementById('correctionQ'+event.target.getAttribute('id')[1]))
+            document.getElementById('correctionQ'+event.target.getAttribute('id')[1]).remove();
+        let userCorrection = document.createElement('input');
+        userCorrection.setAttribute('class', 'visually-hidden');
+        userCorrection.setAttribute('id', 'correctionQ'+event.target.getAttribute('id')[1]);
+        userCorrection.setAttribute('name', 'correctionQ'+event.target.getAttribute('id')[1]);
+        userCorrection.setAttribute('value', 'm'+modelResponse+'u'+event.target.getAttribute('id')[3]);
+        event.target.parentNode.appendChild(userCorrection);
     }
+}
+
+function resetAnswer() {
+    modelResponse=null;
+    userResponse=null;
 }
 
 for (let i = 0; i < recordButtons.length; i++) {
