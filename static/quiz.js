@@ -83,7 +83,7 @@ function onAnswerButtonClick(event) {
         userCorrection.setAttribute('class', 'visually-hidden');
         userCorrection.setAttribute('id', 'correctionQ'+event.target.getAttribute('id')[1]);
         userCorrection.setAttribute('name', 'correctionQ'+event.target.getAttribute('id')[1]);
-        userCorrection.setAttribute('value', 'm'+modelResponse+'u'+event.target.getAttribute('id')[3]);
+        userCorrection.setAttribute('value', modelResponse);
         event.target.parentNode.appendChild(userCorrection);
     }
 }
@@ -93,6 +93,27 @@ function resetAnswer() {
     userResponse=null;
 }
 
+function finishQuiz(questionNumber) {
+    const formData = new FormData(document.getElementById('quizForm'));
+    const formEntries = Object.fromEntries(formData.entries());
+    console.log(formEntries);
+    questionNumber = parseInt(questionNumber, 10);
+
+    for (let i = 1; i <= questionNumber; i++) {
+        const questionKey = 'q' + i;
+        const questionValue = formEntries[questionKey];
+        console.log(`Valeur pour ${questionKey}: ${questionValue}`);
+    }
+    for (let i = 1; i <= questionNumber; i++) {
+        const correctionKey = 'correctionQ' + i;
+        if (correctionKey in formEntries) {
+            const correctionValue = formEntries[correctionKey];
+            console.log(`Valeur pour ${correctionKey}: ${correctionValue}`);
+        }
+    }
+    window.location.href = 'results';
+}
+
 for (let i = 0; i < recordButtons.length; i++) {
     recordButtons[i].addEventListener('click', onRecordButtonClick);
 }
@@ -100,3 +121,4 @@ for (let i = 0; i < recordButtons.length; i++) {
 for (let i = 0; i < answerButtons.length; i++) {
     answerButtons[i].addEventListener('click', onAnswerButtonClick);
 }
+
