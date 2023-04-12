@@ -4,4 +4,5 @@ from django.shortcuts import render
 
 
 def dashboard(request):
-    return render(request, 'dashboard.html', context={})
+    context = {'userChart': [28, 40, 36, 52, 38, 60, 55]}
+    return render(request, 'dashboard.html', context=context)
