@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'play',
     'user_settings',
     'authenticate',
-    'custom_tags'
+    'custom_tags',
+    'quiz'
 ]
 
 MIDDLEWARE = [
@@ -66,7 +67,8 @@ TEMPLATES = [
             BASE_DIR / 'dashboard/templates',
             BASE_DIR / 'play/templates',
             BASE_DIR / 'user_settings/templates',
-            BASE_DIR / 'authenticate/templates'
+            BASE_DIR / 'authenticate/templates',
+            BASE_DIR / 'quiz/templates'
         ],
         'APP_DIRS': True,
         'OPTIONS': {

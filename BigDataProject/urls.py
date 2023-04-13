@@ -21,6 +21,7 @@ import dashboard.views
 import play.views
 import user_settings.views
 import authenticate.views
+import quiz.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -33,5 +34,6 @@ urlpatterns = [
     path('fake_model/', play.views.fake_model, name="fake_model"),
     path('signin/', authenticate.views.SigninPageView.as_view(), name="signin"),
     path('signup/', authenticate.views.SignupPageView.as_view(), name="signup"),
-    path('signout/', authenticate.views.signout_user, name="signout")
+    path('signout/', authenticate.views.signout_user, name="signout"),
+    path('quiz/', quiz.views.quiz, name="quiz")
 ]

@@ -1,6 +1,7 @@
 import json
 from django.contrib.sites import requests
 from django.http import JsonResponse, HttpResponse
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, reverse
 import requests
 import random
@@ -8,6 +9,7 @@ from .models import Quiz, Question, Theme
 # Create your views here.
 
 
+@login_required
 def play(request, step):
     if (step == "wait-for-quiz" or step == "quiz" or step == "results") and not 'quiz' in request.session:
         return redirect('play', step="themes")
@@ -39,7 +41,7 @@ def play(request, step):
 
     elif request.method == 'POST' and step == 'results':
         request.session.pop('quiz')
-        return redirect('dashboard')
+        return redirect('quiz')
 
     return render(request, 'play.html', context={'step': step, 'themes': [{'id': 1, 'name': 'themes1'}, {'id': 2, 'name': 'themes2'}, {'id': 3, 'name': 'themes3'}]})
 
