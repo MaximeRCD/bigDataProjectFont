@@ -64,13 +64,13 @@
                 {% endif %}
                 {% if 'quiz' in request.path %}
                     <li class="nav-item">
-                        <a class="nav-link active" href="{% url 'quiz' %}">
+                        <a class="nav-link active" href="{% url 'quiz_list' %}">
                             <i class="nav-icon me-2 fe fe-repeat"></i> Quiz review
                         </a>
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'quiz' %}">
+                        <a class="nav-link" href="{% url 'quiz_list' %}">
                             <i class="nav-icon me-2 fe fe-repeat"></i> Quiz review
                         </a>
                     </li>
