@@ -8,7 +8,7 @@
         <div class="card-header">
             <div class="mb-3 mb-lg-0">
                 <h3 class="mb-1">My Quiz Attempt</h3>
-                <p class="mb-0">You can find all of your order Invoices.</p>
+                <p class="mb-0">You can find all of your quiz.</p>
             </div>
         </div>
         <!-- table -->
@@ -25,86 +25,27 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>
-                        <div>
-                            <a href="#">
-                                <h5 class="mb-1">How to easily create a website with React</h5>
-                            </a>
-                            <small>20 June, 2022, 12:49 pm</small>
-                        </div>
-                    </td>
-                    <td>25</td>
-                    <td>9</td>
-                    <td>16</td>
-                    <td>18(39%)</td>
-                    <td><span class="badge bg-danger-soft">Fail</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div>
-                            <a href="#">
-                                <h5 class="mb-1">The Python Course: build web application</h5>
-                            </a>
-                            <small>10 June, 2022, 12:49 pm</small>
-                        </div>
-                    </td>
-                    <td>40</td>
-                    <td>20</td>
-                    <td>20</td>
-                    <td>50(50%)</td>
-                    <td><span class="badge bg-warning-soft">Pending</span></td>
-                </tr>
-                <tr>
-                    <td>
-                        <div>
-                            <a href="#">
-                                <h5 class="mb-1">Angular - the complete guide for beginner</h5>
-                            </a>
-                            <small>08 June, 2022, 12:49 pm</small>
-                        </div>
-                    </td>
-                    <td>20</td>
-                    <td>20</td>
-                    <td>0</td>
-                    <td>11(100%)</td>
-                    <td><span class="badge bg-success-soft">Pass</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div>
-                            <a href="#">
-                                <h5 class="mb-1">Wordpress: complete WordPress theme &amp; plugin
-                                    development</h5>
-                            </a>
-                            <small>5 June, 2022, 12:49 pm</small>
-                        </div>
-                    </td>
-                    <td>25</td>
-                    <td>9</td>
-                    <td>16</td>
-                    <td>18(39%)</td>
-                    <td><span class="badge bg-danger-soft">Fail</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div>
-                            <a href="#">
-                                <h5 class="mb-1">CSS: ultimate CSS course from beginner to advanced
-                                </h5>
-                            </a>
-                            <small>4 June, 2022, 12:49 pm</small>
-                        </div>
-                    </td>
-                    <td>25</td>
-                    <td>9</td>
-                    <td>16</td>
-                    <td>18(39%)</td>
-                    <td><span class="badge bg-danger-soft">Fail</span></td>
-                </tr>
+                {% for quiz in quizzes %}
+                    <tr>
+                        <td>
+                            <div>
+                                <a href="{% url 'quiz_attempt' quiz.quiz_id %}">
+                                    <h5 class="mb-1">{{ quiz.unique_themes }}</h5>
+                                </a>
+                                <small>{{ quiz.quiz_date }}</small>
+                            </div>
+                        </td>
+                        <td>{{ results.userAnswers|length }}</td>
+                        <td>{{ results.numberOfGoodAnswer }}</td>
+                        <td>{{ results.numberOfBadAnswer }}</td>
+                        <td>{{ results.points }} ({{ results.percentage }}%)</td>
+                        {% if results.percentage > 75 %}
+                            <td><span class="badge bg-success-soft">Pass</span></td>
+                        {% else %}
+                            <td><span class="badge bg-danger-soft">Fail</span></td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
                 </tbody>
             </table>
         </div>
