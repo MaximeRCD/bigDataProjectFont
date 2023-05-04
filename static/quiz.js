@@ -35,8 +35,28 @@ function onRecordButtonClick(event) {
     } else if (recorder.state === 'recording') {
         recorder.stop();
         recorder.ondataavailable = (e) => {
-            const audioURL = URL.createObjectURL(e.data);
-            console.log(audioURL);
+            let chunks = [];
+            chunks.push(e.data);
+            const blob = new Blob(chunks, {'type': 'audio/wav'});
+            const url = URL.createObjectURL(blob);
+
+            const formData = new FormData();
+            formData.append('audio', blob, 'audio.wav');
+            formData.append('question_id', '');
+            formData.append('quiz_id', '');
+
+            fetch('https://your-api-endpoint.com/upload-audio', {
+                method: 'POST',
+                body: formData
+            }).then(function (response) {
+                if (response.ok) {
+                    console.log('Audio uploaded successfully');
+                } else {
+                    console.log('Upload failed');
+                }
+            }).catch(function (error) {
+                console.log('Error uploading audio', error);
+            });
         };
         stream.getTracks().forEach((track) => track.stop());
         recorder = null;
@@ -55,14 +75,13 @@ function onRecordButtonClick(event) {
                 recordButton.appendChild(icon);
                 modelResponse = data.answer;
 
-                if (!document.getElementById(recordButton.getAttribute('answer_name') + data.answer)){
+                if (!document.getElementById(recordButton.getAttribute('answer_name') + data.answer)) {
                     let toastEl = document.querySelector('.toast');
                     let toast = new bootstrap.Toast(toastEl);
                     toast.show();
-                }
-                else {
+                } else {
                     document.getElementById(recordButton.getAttribute('answer_name') + data.answer).checked = true;
-                    document.getElementById('nextQ'+recordButton.getAttribute('answer_name')[1]).classList.remove('disabled');
+                    document.getElementById('nextQ' + recordButton.getAttribute('answer_name')[1]).classList.remove('disabled');
                 }
             })
             .catch((error) => {
@@ -74,23 +93,22 @@ function onRecordButtonClick(event) {
 function onAnswerButtonClick(event) {
     if (modelResponse == null) {
         event.target.checked = false;
-    }
-    else {
+    } else {
         userResponse = event.target.getAttribute('id')[3];
-        if (document.getElementById('correctionQ'+event.target.getAttribute('id')[1]))
-            document.getElementById('correctionQ'+event.target.getAttribute('id')[1]).remove();
+        if (document.getElementById('correctionQ' + event.target.getAttribute('id')[1]))
+            document.getElementById('correctionQ' + event.target.getAttribute('id')[1]).remove();
         let userCorrection = document.createElement('input');
         userCorrection.setAttribute('class', 'visually-hidden');
-        userCorrection.setAttribute('id', 'correctionQ'+event.target.getAttribute('id')[1]);
-        userCorrection.setAttribute('name', 'correctionQ'+event.target.getAttribute('id')[1]);
+        userCorrection.setAttribute('id', 'correctionQ' + event.target.getAttribute('id')[1]);
+        userCorrection.setAttribute('name', 'correctionQ' + event.target.getAttribute('id')[1]);
         userCorrection.setAttribute('value', modelResponse);
         event.target.parentNode.appendChild(userCorrection);
     }
 }
 
 function resetAnswer() {
-    modelResponse=null;
-    userResponse=null;
+    modelResponse = null;
+    userResponse = null;
 }
 
 function finishQuiz(questionNumber) {
