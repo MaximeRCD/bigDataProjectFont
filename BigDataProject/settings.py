@@ -87,11 +87,20 @@ WSGI_APPLICATION = 'BigDataProject.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
+"""
+'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'db-project',
+        'USER': 'front-django',
+        'PASSWORD': '0jJ{hxv*g4O`+@{B',
+        'HOST': '34.163.143.66',
+        'PORT': '3306',
+    }
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': BASE_DIR / 'db-project.sqlite3',
     }
 }
 
