@@ -2,10 +2,12 @@ import json
 from django.contrib.sites import requests
 from django.http import JsonResponse, HttpResponse
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, redirect, reverse, get_object_or_404
 import requests
 import random
-from .models import Quiz, Question, Theme
+from .models import Quiz, Question, Theme, Response
+
+
 # Create your views here.
 
 
@@ -36,8 +38,32 @@ def play(request, step):
 
     elif request.method == 'GET' and step == 'results':
         request.session['quiz']['state'] = "terminated"
-        results = {'percentage': 66.0, 'userAnswers': [1, 3, 2, 4], 'goodAnswers': [1, 1, 2, 3]}
-        results['numberOfGoodAnswer'] = sum(ua == ga for ua, ga in zip(results['userAnswers'], results['goodAnswers']))
+        quiz_hash = 'f6d233e2621878b3a88d22ec24de73f6e83aa6cc4cfa49a600430dc6edeeef0f'
+        # 1. Récupérez le quiz en utilisant le quiz_id
+        quizs = Quiz.objects.filter(quiz_hash=quiz_hash)
+
+        # 2. Récupérez toutes les questions associées au quiz
+        questions = Question.objects.filter(quiz__in=quizs)
+        print(questions.values_list('id', flat=True))
+        # 3. Comptez le nombre total de questions
+        total_questions = questions.count()
+
+        # Récupérez les user_answers à partir de la base de données
+        user_responses = Quiz.objects.filter(quiz_hash=quiz_hash).values_list('response_id', flat=True)
+
+        print(user_responses)
+        # 4. Utilisez la liste des réponses de l'utilisateur et récupérez les réponses correctes pour chaque question en une seule requête
+        correct_responses = Response.objects.filter(id__in=user_responses, is_true=True).count()
+
+        # 5. Calculez le pourcentage de bonnes réponses
+        print(total_questions)
+        percentage = (correct_responses / total_questions) * 100
+
+        results = {
+            'percentage': percentage,
+            'numberOfGoodAnswer': correct_responses
+        }
+        print(results)
         return render(request, 'play.html', context={'step': step, 'results': results})
 
     elif request.method == 'POST' and step == 'results':

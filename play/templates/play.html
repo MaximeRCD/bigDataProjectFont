@@ -247,7 +247,7 @@
                                         },
                                     },
                                 },
-                                colors: ['#37a169'],
+                                colors: ['{% if results.percentage >= 75 %}#37a169{% else %}#aa0000{% endif %}'],
                                 stroke: {lineCap: 'round'},
                                 labels:["{{ results.percentage }}%"]
                             };
