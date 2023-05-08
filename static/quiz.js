@@ -42,15 +42,30 @@ function onRecordButtonClick(event) {
 
             const formData = new FormData();
             formData.append('audio', blob, 'audio.wav');
-            formData.append('question_id', '');
-            formData.append('quiz_id', '');
+            formData.append('question_id', '1');
+            formData.append('user_id', '1');
+            console.log(formData);
 
-            fetch('https://your-api-endpoint.com/upload-audio', {
+            fetch('https://api-k3dvzrn44a-od.a.run.app/ml/prediction', {
                 method: 'POST',
                 body: formData
-            }).then(function (response) {
-                if (response.ok) {
-                    console.log('Audio uploaded successfully');
+            }).then(function (data) {
+                if (data.ok) {
+                    console.log(data);
+                    let icon = document.createElement('i');
+                    icon.setAttribute('class', 'fe fe-mic');
+                    recordButton.firstElementChild.remove();
+                    recordButton.appendChild(icon);
+                    modelResponse = data.predicted_label;
+
+                    if (!document.getElementById(recordButton.getAttribute('answer_name') + data.predicted_label)) {
+                        let toastEl = document.querySelector('.toast');
+                        let toast = new bootstrap.Toast(toastEl);
+                        toast.show();
+                    } else {
+                        document.getElementById(recordButton.getAttribute('answer_name') + data.predicted_label).checked = true;
+                        document.getElementById('nextQ' + recordButton.getAttribute('answer_name')[1]).classList.remove('disabled');
+                    }
                 } else {
                     console.log('Upload failed');
                 }
@@ -61,32 +76,7 @@ function onRecordButtonClick(event) {
         stream.getTracks().forEach((track) => track.stop());
         recorder = null;
         stream = null;
-        fetch('/fake_model/')
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error(`Erreur HTTP: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then((data) => {
-                let icon = document.createElement('i');
-                icon.setAttribute('class', 'fe fe-mic');
-                recordButton.firstElementChild.remove();
-                recordButton.appendChild(icon);
-                modelResponse = data.answer;
 
-                if (!document.getElementById(recordButton.getAttribute('answer_name') + data.answer)) {
-                    let toastEl = document.querySelector('.toast');
-                    let toast = new bootstrap.Toast(toastEl);
-                    toast.show();
-                } else {
-                    document.getElementById(recordButton.getAttribute('answer_name') + data.answer).checked = true;
-                    document.getElementById('nextQ' + recordButton.getAttribute('answer_name')[1]).classList.remove('disabled');
-                }
-            })
-            .catch((error) => {
-                console.error('Erreur lors de la requête à l\'API:', error);
-            });
     }
 }
 

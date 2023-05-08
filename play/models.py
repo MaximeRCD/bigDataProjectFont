@@ -8,9 +8,15 @@ from authenticate.models import User
 class Type(models.Model):
     type = models.CharField(max_length=100, null=True)
 
+    class Meta:
+        db_table = 'type'
+
 
 class Theme(models.Model):
     theme = models.CharField(max_length=100, null=True)
+
+    class Meta:
+        db_table = 'theme'
 
 
 class Question(models.Model):
@@ -19,11 +25,17 @@ class Question(models.Model):
     type_id = models.ForeignKey(Type, on_delete=models.DO_NOTHING)
     created_at = models.DateTimeField(db_column='createdAt', null=True)
 
+    class Meta:
+        db_table = 'question'
+
 
 class Response(models.Model):
     response = models.CharField(max_length=100, null=True)
     is_true = models.BooleanField(db_column='isTrue', null=True)  # Field name made lowercase.
     id_question = models.ForeignKey(Question, db_column='idQuestion', on_delete=models.DO_NOTHING)
+
+    class Meta:
+        db_table = 'reponse'
 
 
 class Quiz(models.Model):
@@ -46,3 +58,6 @@ class Quiz(models.Model):
             self.hash_value = hash_string
 
         super().save(*args, **kwargs)
+
+    class Meta:
+        db_table = 'quizz'
