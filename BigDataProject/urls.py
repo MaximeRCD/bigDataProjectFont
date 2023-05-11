@@ -36,5 +36,5 @@ urlpatterns = [
     path('signup/', authenticate.views.SignupPageView.as_view(), name="signup"),
     path('signout/', authenticate.views.signout_user, name="signout"),
     path('quiz/', quiz.views.quiz_list, name="quiz_list"),
-    path('quiz/<int:quiz_id>', quiz.views.quiz_attempt, name="quiz_attempt")
+    path('quiz/<slug:quiz_hash>/', quiz.views.quiz_attempt, name="quiz_attempt")
 ]

@@ -29,7 +29,7 @@
                     <tr>
                         <td>
                             <div>
-                                <a href="{% url 'quiz_attempt' quiz.quiz_id %}">
+                                <a href="{% url 'quiz_attempt' quiz.quiz_hash %}">
                                     <h5 class="mb-1">{{ quiz.unique_themes }}</h5>
                                 </a>
                                 <small>{{ quiz.quiz_date }}</small>

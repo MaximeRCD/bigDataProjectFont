@@ -39,34 +39,37 @@ function onRecordButtonClick(event) {
             chunks.push(e.data);
             const blob = new Blob(chunks, { 'type': 'audio/webm'});
             const url = URL.createObjectURL(blob);
-
             const formData = new FormData();
             formData.append('audio', blob, 'audio/webm');
             formData.append('question_id', '1');
             formData.append('user_id', '1');
-            console.log(formData);
+            const entries = formData.entries();
 
             fetch('http://127.0.0.1:8001/ml/prediction', {
                 method: 'POST',
                 body: formData
             }).then(function (data) {
                 if (data.ok) {
-                    console.log(data);
                     let icon = document.createElement('i');
                     icon.setAttribute('class', 'fe fe-mic');
                     recordButton.firstElementChild.remove();
                     recordButton.appendChild(icon);
-                    modelResponse = data.predicted_label;
+                    data.json().then((result) => {
+                        modelResponse = result.predicted_label;
+                        console.log(modelResponse);
 
-                    if (!document.getElementById(recordButton.getAttribute('answer_name') + data.predicted_label)) {
-                        let toastEl = document.querySelector('.toast');
-                        let toast = new bootstrap.Toast(toastEl);
-                        toast.show();
-                    } else {
-                        document.getElementById(recordButton.getAttribute('answer_name') + data.predicted_label).checked = true;
-                        document.getElementById('nextQ' + recordButton.getAttribute('answer_name')[1]).classList.remove('disabled');
-                    }
+                        if (!document.getElementById(recordButton.getAttribute('answer_name') + modelResponse)) {
+                            let toastEl = document.querySelector('.toast');
+                            let toast = new bootstrap.Toast(toastEl);
+                            toast.show();
+                        } else {
+                            document.getElementById(recordButton.getAttribute('answer_name') + modelResponse).checked = true;
+                            document.getElementById('nextQ' + recordButton.getAttribute('answer_name')[1]).classList.remove('disabled');
+                        }
+                    });
+
                 } else {
+                    console.log(data);
                     console.log('Upload failed');
                 }
             }).catch(function (error) {

@@ -7,7 +7,6 @@ import requests
 import random
 from .models import Quiz, Question, Theme, Response
 
-
 # Create your views here.
 
 
@@ -79,5 +78,5 @@ def get_questions(request, themes):
 
 
 def fake_model(request):
-    response = '{"answer": '+str(random.randint(1, 4))+'}'
+    response = '{"predicted_label": '+str(random.randint(1, 4))+'}'
     return HttpResponse(response)

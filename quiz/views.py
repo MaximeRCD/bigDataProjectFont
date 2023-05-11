@@ -20,9 +20,9 @@ def quiz_list(request):
 
     # Récupérer les thèmes uniques pour chaque quiz
     for quiz in quizzes:
-        questions = Question.objects.filter(quiz_id=quiz)
+        questions = Question.objects.filter(quiz=quiz)
         themes = Theme.objects.filter(question__in=questions)
-        theme_set = set(theme.name for theme in themes)
+        theme_set = set(theme.theme for theme in themes)
         quiz.unique_themes = ' - '.join(theme_set)
 
     results = {'percentage': 66.0, 'userAnswers': [1, 3, 2, 4], 'goodAnswers': [1, 1, 2, 3]}
@@ -32,11 +32,11 @@ def quiz_list(request):
 
 
 @login_required
-def quiz_attempt(request, quiz_id):
-    quiz = Quiz.objects.get(quiz_id=quiz_id)
+def quiz_attempt(request, quiz_hash):
+    quiz = Quiz.objects.filter(quiz_hash=quiz_hash).first()
     if quiz.user_id == request.user:
-        quiz = Quiz.objects.select_related('user_id').prefetch_related('question_set', 'question_set__answer_set').get(quiz_id=quiz_id)
-        questions = Question.objects.filter(quiz_id=quiz_id)
+        quizzes = Quiz.objects.filter(quiz_hash=quiz_hash)
+        questions = [quiz.question_id for quiz in quizzes]
         themes = Theme.objects.filter(question__in=questions).distinct()
         theme_string = ' - '.join([theme.name for theme in themes])
         return render(request, 'quiz_attempt.html', context={'quiz': quiz, 'themes': theme_string, 'results': {'percentage': 66.0, 'points': 5}})
