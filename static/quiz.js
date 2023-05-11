@@ -37,16 +37,16 @@ function onRecordButtonClick(event) {
         recorder.ondataavailable = (e) => {
             let chunks = [];
             chunks.push(e.data);
-            const blob = new Blob(chunks, {'type': 'audio/wav'});
+            const blob = new Blob(chunks, { 'type': 'audio/webm'});
             const url = URL.createObjectURL(blob);
 
             const formData = new FormData();
-            formData.append('audio', blob, 'audio.wav');
+            formData.append('audio', blob, 'audio/webm');
             formData.append('question_id', '1');
             formData.append('user_id', '1');
             console.log(formData);
 
-            fetch('https://api-k3dvzrn44a-od.a.run.app/ml/prediction', {
+            fetch('http://127.0.0.1:8001/ml/prediction', {
                 method: 'POST',
                 body: formData
             }).then(function (data) {
