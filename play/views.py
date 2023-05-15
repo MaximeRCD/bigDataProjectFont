@@ -69,6 +69,10 @@ def play(request, step):
         request.session.pop('quiz')
         return redirect('quiz')
 
+    elif request.method == "POST" and step == 'create_quizz':
+        print("post : ", request.POST)
+        return HttpResponse({"isCreated": "True"})
+
     return render(request, 'play.html', context={'step': step, 'themes': [{'id': 1, 'name': 'themes1'}, {'id': 2, 'name': 'themes2'}, {'id': 3, 'name': 'themes3'}]})
 
 

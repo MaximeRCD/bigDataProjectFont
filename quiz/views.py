@@ -38,7 +38,7 @@ def quiz_attempt(request, quiz_hash):
         quizzes = Quiz.objects.filter(quiz_hash=quiz_hash)
         questions = [quiz.question_id for quiz in quizzes]
         themes = Theme.objects.filter(question__in=questions).distinct()
-        theme_string = ' - '.join([theme.name for theme in themes])
+        theme_string = ' - '.join([theme.theme for theme in themes])
         return render(request, 'quiz_attempt.html', context={'quiz': quiz, 'themes': theme_string, 'results': {'percentage': 66.0, 'points': 5}})
     else:
         return redirect('quiz_list')

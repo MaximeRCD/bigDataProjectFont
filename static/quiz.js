@@ -56,7 +56,6 @@ function onRecordButtonClick(event) {
                     recordButton.appendChild(icon);
                     data.json().then((result) => {
                         modelResponse = result.predicted_label;
-                        console.log(modelResponse);
 
                         if (!document.getElementById(recordButton.getAttribute('answer_name') + modelResponse)) {
                             let toastEl = document.querySelector('.toast');
@@ -105,15 +104,29 @@ function resetAnswer() {
 }
 
 function finishQuiz(questionNumber) {
-    const formData = new FormData(document.getElementById('quizForm'));
+    let form = document.getElementById('quizForm');
+    form.method = 'POST';
+    form.action = 'create_quizz';
+    form.onsubmit = null;
+    form.submit();
+    return 0;
+
+    const formData = new FormData(form);
+    console.log(formData);
+
     const formEntries = Object.fromEntries(formData.entries());
-    console.log(formEntries);
-    questionNumber = parseInt(questionNumber, 10);
+    const csrftoken = formEntries['csrfmiddlewaretoken'];
+    delete formEntries['csrfmiddlewaretoken'];
+
+    console.log(JSON.stringify(formEntries));
+
+    /*questionNumber = parseInt(questionNumber, 10);
+    let userResponse = '';
 
     for (let i = 1; i <= questionNumber; i++) {
         const questionKey = 'q' + i;
         const questionValue = formEntries[questionKey];
-        console.log(`Valeur pour ${questionKey}: ${questionValue}`);
+        userResponse += `"${questionKey}": "${questionValue}"`;
     }
     for (let i = 1; i <= questionNumber; i++) {
         const correctionKey = 'correctionQ' + i;
@@ -121,8 +134,27 @@ function finishQuiz(questionNumber) {
             const correctionValue = formEntries[correctionKey];
             console.log(`Valeur pour ${correctionKey}: ${correctionValue}`);
         }
-    }
-    window.location.href = 'results';
+    }*/
+
+    fetch('create_quizz', {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': csrftoken
+        },
+        body: {
+            'str_response': JSON.stringify(formEntries)
+        }
+    }).then(function (data) {
+        if (data.ok) {
+            console.log(data);
+            //window.location.href = 'results';
+        }
+        else {
+            let toastEl = document.querySelector('.toast');
+            let toast = new bootstrap.Toast(toastEl);
+            toast.show();
+        }
+    });
 }
 
 for (let i = 0; i < recordButtons.length; i++) {
