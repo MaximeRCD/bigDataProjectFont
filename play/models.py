@@ -35,7 +35,7 @@ class Response(models.Model):
     id_question = models.ForeignKey(Question, db_column='idQuestion', on_delete=models.DO_NOTHING)
 
     class Meta:
-        db_table = 'reponse'
+        db_table = 'response'
 
 
 class Quiz(models.Model):

@@ -1,10 +1,12 @@
 import json
+from django.utils import timezone
 from django.contrib.sites import requests
 from django.http import JsonResponse, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 import requests
 import random
+import hashlib
 from .models import Quiz, Question, Theme, Response
 
 # Create your views here.
@@ -16,9 +18,20 @@ def play(request, step):
         return redirect('play', step="themes")
 
     if request.method == "POST" and step == "themes":
-        checked_boxes = [request.POST[f'theme{i}'] for i in range(1, 5) if request.POST.get(f'theme{i}')]
-        response = requests.get('http://127.0.0.1:8000/get_questions/'+','.join(checked_boxes)+'/')
-        request.session['quiz'] = {"state": "not_started", "questions": response.json()['questions']}
+        themes = []
+
+        for key, value in request.POST.items():
+            if key.startswith('theme'):
+                themes.append(value)
+        themes = themes[:3]
+
+        response = requests.get('http://127.0.0.1:8001/quizz/new_quizz/', json=themes)
+        questions = []
+
+        for question in response.json():
+            questions.append(question['id'])
+
+        request.session['quiz'] = {"state": "not_started", "questions": questions}
         return redirect('play', step="wait-for-quiz")
 
     elif request.method == "POST" and step == "wait-for-quiz":
@@ -27,7 +40,6 @@ def play(request, step):
         return redirect('play', step="quiz")
 
     elif request.method == 'GET' and step == 'quiz':
-        print(request.session['quiz'])
         questions_ids = request.session['quiz']['questions']
         questions = Question.objects.filter(id__in=questions_ids).prefetch_related('response_set')
 
@@ -35,11 +47,10 @@ def play(request, step):
         theme_string = ' - '.join([theme.theme for theme in themes])
         return render(request, 'play.html', context={'step': step, 'questions': questions, 'themes': theme_string})
 
-    elif request.method == 'GET' and step == 'results':
-        request.session['quiz']['state'] = "terminated"
-        quiz_hash = 'f6d233e2621878b3a88d22ec24de73f6e83aa6cc4cfa49a600430dc6edeeef0f'
+    elif request.method == 'GET' and step == 'results' and 'quiz_hash' in request.session:
+        request.session.pop('quiz')
         # 1. Récupérez le quiz en utilisant le quiz_id
-        quizs = Quiz.objects.filter(quiz_hash=quiz_hash)
+        quizs = Quiz.objects.filter(quiz_hash=request.session['quiz_hash'])
 
         # 2. Récupérez toutes les questions associées au quiz
         questions = Question.objects.filter(quiz__in=quizs)
@@ -48,7 +59,7 @@ def play(request, step):
         total_questions = questions.count()
 
         # Récupérez les user_answers à partir de la base de données
-        user_responses = Quiz.objects.filter(quiz_hash=quiz_hash).values_list('response_id', flat=True)
+        user_responses = Quiz.objects.filter(quiz_hash=request.session['quiz_hash']).values_list('response_id', flat=True)
 
         print(user_responses)
         # 4. Utilisez la liste des réponses de l'utilisateur et récupérez les réponses correctes pour chaque question en une seule requête
@@ -63,21 +74,39 @@ def play(request, step):
             'numberOfGoodAnswer': correct_responses
         }
         print(results)
-        return render(request, 'play.html', context={'step': step, 'results': results})
-
-    elif request.method == 'POST' and step == 'results':
-        request.session.pop('quiz')
-        return redirect('quiz')
+        return render(request, 'play.html', context={'step': step, 'results': results, 'quiz_hash': request.session['quiz_hash']})
 
     elif request.method == "POST" and step == 'create_quizz':
-        print("post : ", request.POST)
-        return HttpResponse({"isCreated": "True"})
+        questions_responses = request.POST.copy()
+        questions_responses.pop('csrfmiddlewaretoken', None)
+        question_fields = {}
+        correction_fields = {}
 
-    return render(request, 'play.html', context={'step': step, 'themes': [{'id': 1, 'name': 'themes1'}, {'id': 2, 'name': 'themes2'}, {'id': 3, 'name': 'themes3'}]})
+        for key, value in questions_responses.items():
+            if key.startswith('q'):
+                question_fields[key] = value
+            elif key.startswith('correctionQ'):
+                correction_fields[key] = value
+
+        combined_values = str(timezone.now()) + str(request.user.username)
+        quiz_hash = hashlib.sha256(combined_values.encode('utf-8')).hexdigest()
+        for question, response in question_fields.items():
+            quiz = Quiz()
+            quiz.user_id = request.user
+            quiz.response_id = Response.objects.get(id=response[0])
+            quiz.question_id = Question.objects.get(id=question.replace('q', ''))
+            quiz.created_at = timezone.now()
+            quiz.quiz_hash = quiz_hash
+            quiz.save()
+        request.session['quiz']['state'] = "terminated"
+        request.session['quiz_hash'] = quiz_hash
+        return redirect('play', step="results")
+
+    return render(request, 'play.html', context={'step': step, 'themes': Theme.objects.all()})
 
 
 def get_questions(request, themes):
-    response = '{"questions": [1,2,3,4]}'
+    response = '{"questions": [31,32]}'
     return HttpResponse(response)
 
 

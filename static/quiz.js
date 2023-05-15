@@ -63,7 +63,7 @@ function onRecordButtonClick(event) {
                             toast.show();
                         } else {
                             document.getElementById(recordButton.getAttribute('answer_name') + modelResponse).checked = true;
-                            document.getElementById('nextQ' + recordButton.getAttribute('answer_name')[1]).classList.remove('disabled');
+                            document.getElementById('nextQ' + recordButton.getAttribute('answer_name').replace('q', '').replace('a', '')).classList.remove('disabled');
                         }
                     });
 
@@ -110,51 +110,6 @@ function finishQuiz(questionNumber) {
     form.onsubmit = null;
     form.submit();
     return 0;
-
-    const formData = new FormData(form);
-    console.log(formData);
-
-    const formEntries = Object.fromEntries(formData.entries());
-    const csrftoken = formEntries['csrfmiddlewaretoken'];
-    delete formEntries['csrfmiddlewaretoken'];
-
-    console.log(JSON.stringify(formEntries));
-
-    /*questionNumber = parseInt(questionNumber, 10);
-    let userResponse = '';
-
-    for (let i = 1; i <= questionNumber; i++) {
-        const questionKey = 'q' + i;
-        const questionValue = formEntries[questionKey];
-        userResponse += `"${questionKey}": "${questionValue}"`;
-    }
-    for (let i = 1; i <= questionNumber; i++) {
-        const correctionKey = 'correctionQ' + i;
-        if (correctionKey in formEntries) {
-            const correctionValue = formEntries[correctionKey];
-            console.log(`Valeur pour ${correctionKey}: ${correctionValue}`);
-        }
-    }*/
-
-    fetch('create_quizz', {
-        method: 'POST',
-        headers: {
-            'X-CSRFToken': csrftoken
-        },
-        body: {
-            'str_response': JSON.stringify(formEntries)
-        }
-    }).then(function (data) {
-        if (data.ok) {
-            console.log(data);
-            //window.location.href = 'results';
-        }
-        else {
-            let toastEl = document.querySelector('.toast');
-            let toast = new bootstrap.Toast(toastEl);
-            toast.show();
-        }
-    });
 }
 
 for (let i = 0; i < recordButtons.length; i++) {
@@ -165,3 +120,27 @@ for (let i = 0; i < answerButtons.length; i++) {
     answerButtons[i].addEventListener('click', onAnswerButtonClick);
 }
 
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('#create_quiz_form');
+    const checkboxes = document.querySelectorAll('input[name^="theme"]');
+    const submitButton = document.querySelector('#create_quiz');
+
+    form.addEventListener('submit', function(event) {
+        const selectedThemes = Array.from(checkboxes).filter(checkbox => checkbox.checked);
+
+        if (selectedThemes.length === 0 || selectedThemes.length > 3) {
+            event.preventDefault(); // Bloque l'envoi du formulaire
+        }
+    });
+
+    checkboxes.forEach(function(checkbox) {
+        checkbox.addEventListener('change', function() {
+            const selectedThemes = Array.from(checkboxes).filter(checkbox => checkbox.checked);
+            if (selectedThemes.length === 0 || selectedThemes.length > 3) {
+                submitButton.classList.add('disabled');
+            } else {
+                submitButton.classList.remove('disabled');
+            }
+        });
+    });
+});
