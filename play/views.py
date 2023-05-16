@@ -67,7 +67,7 @@ def play(request, step):
 
         # 5. Calculez le pourcentage de bonnes réponses
         print(total_questions)
-        percentage = (correct_responses / total_questions) * 100
+        percentage = int((correct_responses / total_questions) * 100)
 
         results = {
             'percentage': percentage,
@@ -93,7 +93,7 @@ def play(request, step):
         for question, response in question_fields.items():
             quiz = Quiz()
             quiz.user_id = request.user
-            quiz.response_id = Response.objects.get(id=response[0])
+            quiz.response_id = Response.objects.get(id=response)
             quiz.question_id = Question.objects.get(id=question.replace('q', ''))
             quiz.created_at = timezone.now()
             quiz.quiz_hash = quiz_hash

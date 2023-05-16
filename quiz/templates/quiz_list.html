@@ -25,21 +25,21 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for quiz in quizzes %}
+                {% for quiz_hash, info in quiz_info.items %}
                     <tr>
                         <td>
                             <div>
-                                <a href="{% url 'quiz_attempt' quiz.quiz_hash %}">
-                                    <h5 class="mb-1">{{ quiz.unique_themes }}</h5>
+                                <a href="{% url 'quiz_attempt' quiz_hash %}">
+                                    <h5 class="mb-1">{{ info.themes }}</h5>
                                 </a>
-                                <small>{{ quiz.quiz_date }}</small>
+                                <small>{{ info.quiz_date }}</small>
                             </div>
                         </td>
-                        <td>{{ results.userAnswers|length }}</td>
-                        <td>{{ results.numberOfGoodAnswer }}</td>
-                        <td>{{ results.numberOfBadAnswer }}</td>
-                        <td>{{ results.points }} ({{ results.percentage }}%)</td>
-                        {% if results.percentage > 75 %}
+                        <td>{{ info.total_questions }}</td>
+                        <td>{{ info.numberOfGoodAnswer }}</td>
+                        <td>{{ info.numberOfBadAnswer }}</td>
+                        <td>{{ info.points }} ({{ info.percentage }}%)</td>
+                        {% if info.percentage >= 75 %}
                             <td><span class="badge bg-success-soft">Pass</span></td>
                         {% else %}
                             <td><span class="badge bg-danger-soft">Fail</span></td>

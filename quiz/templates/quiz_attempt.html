@@ -13,19 +13,19 @@
             </div>
         </div>
         <div class="card-body">
-            {% for question in quiz.question_set.all %}
-                <h3>Q{{ forloop.counter }} : {{ question.text }}</h3>
+            {% for question, user_response, responses in questions %}
+                <h3>Q{{ forloop.counter }} : {{ question.name }}</h3>
                 <div class="row">
-                    {% for answer in question.answer_set.all %}
+                    {% for response in responses %}
                         <div class="d-grid mb-2 col-12 col-md-3">
-                            {% if answer.user_answer and answer.is_correct %}
-                                <button class="btn btn-success text-start">{{ answer.text }}</button>
-                            {% elif answer.user_answer and not answer.is_correct %}
-                                <button class="btn btn-danger text-start">{{ answer.text }}</button>
-                            {% elif answer.is_correct %}
-                                <button class="btn btn-outline-success text-start">{{ answer.text }}</button>
+                            {% if response.id == user_response.id and response.is_true %}
+                                <button class="btn btn-success text-start">{{ response.response }}</button>
+                            {% elif response.id == user_response.id and not response.is_true %}
+                                <button class="btn btn-danger text-start">{{ response.response }}</button>
+                            {% elif response.is_true %}
+                                <button class="btn btn-outline-success text-start">{{ response.response }}</button>
                             {%  else %}
-                                <button class="btn btn-outline-secondary text-start">{{ answer.text }}</button>
+                                <button class="btn btn-outline-secondary text-start">{{ response.response }}</button>
                             {%  endif %}
                         </div>
                     {% endfor %}
