@@ -17,7 +17,7 @@
                 <h3>Q{{ forloop.counter }} : {{ question.name }}</h3>
                 <div class="row">
                     {% for response in responses %}
-                        <div class="d-grid mb-2 col-12 col-md-3">
+                        <div class="d-grid mb-5 col-12 col-md-3">
                             {% if response.id == user_response.id and response.is_true %}
                                 <button class="btn btn-success text-start">{{ response.response }}</button>
                             {% elif response.id == user_response.id and not response.is_true %}
