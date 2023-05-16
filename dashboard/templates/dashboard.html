@@ -13,48 +13,11 @@
                     <div class="row">
                         <!-- col -->
                         <div class="col-12">
-                            <span class="fw-semi-bold text-uppercase fs-6">User</span>
+                            <span class="fw-semi-bold text-uppercase fs-6">Most choosen theme</span>
                         </div>
                         <!-- col -->
-                        <div class="col-6">
-                            <h1 class="fw-bold mt-2 mb-0 h2">30.6k</h1>
-                            <p class="text-success fw-semi-bold mb-0"><i
-                                    class="fe fe-trending-up me-1"></i>+20.9$</p>
-                        </div>
-                        <!-- chart -->
-                        <div class="col-6 d-flex align-items-center">
-                            <div id="chart1"></div>
-                            <script>
-                                window.addEventListener('load', () => {
-                                    e = {
-                                        chart: {
-                                            height: 60,
-                                            type: "area",
-                                            toolbar: {show: !1},
-                                            sparkline: {enabled: !0},
-                                            grid: {show: !1, padding: {left: 0, right: 0}}
-                                        },
-                                        dataLabels: {enabled: !1},
-                                        stroke: {curve: "smooth", width: 2},
-                                        colors: ['#5e3fcb'],
-                                        fill: {
-                                            type: "gradient",
-                                            gradient: {
-                                                gradientToColors: ['#5e3fcb'],
-                                                shadeIntensity: .9,
-                                                opacityFrom: .5,
-                                                opacityTo: .04,
-                                                stops: [0, 80, 100]
-                                            }
-                                        },
-                                        series: [{name: "User", data: {{ userChart }}}],
-                                        xaxis: {labels: {show: !1}, axisBorder: {show: !1}},
-                                        yaxis: [{y: 0, offsetX: 0, offsetY: 0, padding: {left: 0, right: 0}}],
-                                        tooltip: {x: {show: !1}}
-                                    }
-                                    new ApexCharts(document.querySelector("#chart1"), e).render()
-                                });
-                            </script>
+                        <div class="col-12">
+                            <h3 class="fw-bold mt-2 mb-0 h3">theme 1</h3>
                         </div>
                     </div>
                 </div>
@@ -68,49 +31,11 @@
                     <div class="row">
                         <!-- col -->
                         <div class="col-12">
-                            <span class="fw-semi-bold text-uppercase fs-6">Unique Visitors</span>
+                            <span class="fw-semi-bold text-uppercase fs-6">Successful theme</span>
                         </div>
                         <!-- col -->
                         <div class="col-6">
-
-                            <h1 class="fw-bold mt-2 mb-0 h2">256k</h1>
-                            <p class="text-danger fw-semi-bold mb-0"><i
-                                    class="fe fe-trending-down me-1"></i>5%</p>
-                        </div>
-                        <!-- chart -->
-                        <div class="col-6 d-flex align-items-center">
-                            <div id="chart2"></div>
-                            <script>
-                                window.addEventListener('load', () => {
-                                    e = {
-                                        chart: {
-                                            height: 60,
-                                            type: "area",
-                                            toolbar: {show: !1},
-                                            sparkline: {enabled: !0},
-                                            grid: {show: !1, padding: {left: 0, right: 0}}
-                                        },
-                                        dataLabels: {enabled: !1},
-                                        stroke: {curve: "smooth", width: 2},
-                                        colors: ['#18c602'],
-                                        fill: {
-                                            type: "gradient",
-                                            gradient: {
-                                                gradientToColors: ['#18c602'],
-                                                shadeIntensity: .9,
-                                                opacityFrom: .5,
-                                                opacityTo: .04,
-                                                stops: [0, 80, 100]
-                                            }
-                                        },
-                                        series: [{name: "User", data: {{ userChart }}}],
-                                        xaxis: {labels: {show: !1}, axisBorder: {show: !1}},
-                                        yaxis: [{y: 0, offsetX: 0, offsetY: 0, padding: {left: 0, right: 0}}],
-                                        tooltip: {x: {show: !1}}
-                                    }
-                                    new ApexCharts(document.querySelector("#chart2"), e).render()
-                                });
-                            </script>
+                            <h3 class="fw-bold mt-2 mb-0 h3">theme4</h3>
                         </div>
                     </div>
                 </div>
@@ -124,40 +49,11 @@
                     <div class="row">
                         <!-- col -->
                         <div class="col-12">
-                            <span class="fw-semi-bold text-uppercase fs-6">Bounce Rate</span>
+                            <span class="fw-semi-bold text-uppercase fs-6">Unsuccessful theme</span>
                         </div>
                         <!-- col -->
                         <div class="col-6">
-
-                            <h1 class="fw-bold mt-2 mb-0 h2">51.46%</h1>
-                            <p class="text-success fw-semi-bold mb-0"><i
-                                    class="fe fe-trending-up me-1"></i>+1200</p>
-                        </div>
-                        <!-- chart -->
-                        <div class="col-6 d-flex align-items-center">
-                            <div id="chart3"></div>
-                            <script>
-                                window.addEventListener('load', () => {
-                                    e = {
-                                        chart: {
-                                            height: 60,
-                                            type: "line",
-                                            toolbar: {show: !1},
-                                            sparkline: {enabled: !0},
-                                            grid: {show: !1, padding: {left: 0, right: 0}}
-                                        },
-                                        colors: ['#ec5328'],
-                                        dataLabels: {enabled: !1},
-                                        stroke: {curve: "straight", width: 4},
-                                        markers: {size: 4, hover: {size: 6, sizeOffset: 3}},
-                                        series: [{name: "Bonus Rate", data: [28, 40, 36, 52, 38, 60, 55]}],
-                                        xaxis: {labels: {show: !1}, axisBorder: {show: !1}},
-                                        yaxis: [{y: 0, offsetX: 0, offsetY: 0, padding: {left: 0, right: 0}}],
-                                        tooltip: {x: {show: !1}}
-                                    };
-                                    new ApexCharts(document.querySelector("#chart3"), e).render()
-                                });
-                            </script>
+                            <h3 class="fw-bold mt-2 mb-0 h3">theme 2</h3>
                         </div>
                     </div>
                 </div>
@@ -171,48 +67,11 @@
                     <div class="row">
                         <!-- col -->
                         <div class="col-12">
-                            <span class="fw-semi-bold text-uppercase fs-6">Average visit time</span>
+                            <span class="fw-semi-bold text-uppercase fs-6">Member since</span>
                         </div>
                         <!-- col -->
                         <div class="col-6">
-                            <h1 class="fw-bold mt-2 mb-0 h2">1m:17s</h1>
-                            <p class="text-success fw-semi-bold mb-0"><i
-                                    class="fe fe-trending-up me-1"></i>12%</p>
-                        </div>
-                        <!-- chart -->
-                        <div class="col-6 d-flex align-items-center">
-                            <div id="chart4"></div>
-                            <script>
-                                window.addEventListener('load', () => {
-                                    e = {
-                                        chart: {
-                                            height: 60,
-                                            type: "area",
-                                            toolbar: {show: !1},
-                                            sparkline: {enabled: !0},
-                                            grid: {show: !1, padding: {left: 0, right: 0}}
-                                        },
-                                        dataLabels: {enabled: !1},
-                                        stroke: {curve: "smooth", width: 2},
-                                        colors: ['#d30000'],
-                                        fill: {
-                                            type: "gradient",
-                                            gradient: {
-                                                gradientToColors: ['#d30000'],
-                                                shadeIntensity: .9,
-                                                opacityFrom: .5,
-                                                opacityTo: .04,
-                                                stops: [0, 80, 100]
-                                            }
-                                        },
-                                        series: [{name: "User", data: {{ userChart }}}],
-                                        xaxis: {labels: {show: !1}, axisBorder: {show: !1}},
-                                        yaxis: [{y: 0, offsetX: 0, offsetY: 0, padding: {left: 0, right: 0}}],
-                                        tooltip: {x: {show: !1}}
-                                    }
-                                    new ApexCharts(document.querySelector("#chart4"), e).render()
-                                });
-                            </script>
+                            <h3 class="fw-bold mt-2 mb-0 h3">{{ menber_since }}</h3>
                         </div>
                     </div>
                 </div>
@@ -220,12 +79,12 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-12 mb-4">
+        <div class="col-xl-8 col-lg-8 col-md-12 col-12 mb-4">
             <!-- card -->
             <div class="card h-100">
                 <!-- card header -->
                 <div class="card-header">
-                    <h4 class="mb-0">Active User</h4>
+                    <h4 class="mb-0">Created quiz</h4>
                 </div>
                 <!-- card body -->
                 <div class="card-body">
@@ -234,22 +93,16 @@
                         <div class="col-4">
                             <span class="fw-semi-bold">30 days</span>
                             <h1 class="fw-bold mt-2 mb-0 h2">12,698</h1>
-                            <p class="text-success fw-semi-bold mb-0"><i
-                                    class="fe fe-trending-up me-1"></i>4.6%</p>
                         </div>
                         <!-- col -->
                         <div class="col-4">
                             <span class="fw-semi-bold">7 days</span>
                             <h1 class="fw-bold mt-2 mb-0 h2">2.65K</h1>
-                            <p class="text-danger fw-semi-bold mb-0"><i
-                                    class="fe fe-trending-down me-1"></i>4.6%</p>
                         </div>
                         <!-- col -->
                         <div class="col-4">
                             <span class="fw-semi-bold">1 days</span>
                             <h1 class="fw-bold mt-2 mb-0 h2">1.34K</h1>
-                            <p class="text-success fw-semi-bold mb-0"><i
-                                    class="fe fe-trending-up me-1"></i>4.6%</p>
                         </div>
                     </div>
                     <!-- chart -->
@@ -288,75 +141,12 @@
             </div>
 
         </div>
-    </div>
-    <div class="row">
-        <div class="col-12 col-md-12 col-lg-12 col-xl-4 mb-4">
+        <div class="col-xl-4 col-lg-4 col-md-12 col-12 mb-4">
             <!-- card -->
             <div class="card h-100">
                 <!-- card header -->
                 <div class="card-header">
-                    <h4 class="mb-0">Browsers</h4>
-                </div>
-
-
-                <!-- table -->
-                <table class="table mb-0 table-hover table-centered">
-                    <tbody>
-                    <tr>
-                        <td><img src="{% static 'Geek/images/browser-svg/chrome.svg' %}" alt=""
-                                 class="me-2"><span class="align-middle  ">Google
-                                                Chrome</span></td>
-                        <td>21.54%</td>
-
-                    </tr>
-                    <tr>
-                        <td><img src="{% static 'Geek/images/browser-svg/firefox.svg' %}" alt=""
-                                 class="me-2"><span class="align-middle  ">Mozilla
-                                                Firefox</span></td>
-                        <td>14.43%</td>
-
-                    </tr>
-                    <tr>
-                        <td><img src="{% static 'Geek/images/browser-svg/brave.svg' %}" alt=""
-                                 class="me-2"><span class="align-middle ">Brave</span></td>
-                        <td>14.43%</td>
-
-                    </tr>
-                    <tr>
-                        <td><img src="{% static 'Geek/images/browser-svg/safari.svg' %}" alt=""
-                                 class="me-2"><span class="align-middle ">Apple
-                                                Safari</span></td>
-                        <td>8.54%</td>
-
-                    </tr>
-
-
-                    <tr>
-                        <td><img src="{% static 'Geek/images/browser-svg/ie.svg' %}" alt="" class="me-2"><span
-                                class="align-middle ">Internet Export</span>
-                        </td>
-                        <td>6.21%</td>
-
-                    </tr>
-                    <tr>
-                        <td><img src="{% static 'Geek/images/browser-svg/opera.svg' %}" alt=""
-                                 class="me-2"><span class="align-middle">Opera
-                                                Mini</span></td>
-                        <td>8%</td>
-
-                    </tr>
-                    </tbody>
-                </table>
-
-
-            </div>
-        </div>
-        <div class="col-12 col-md-12 col-lg-12 col-xl-4 mb-4">
-            <!-- card -->
-            <div class="card h-100">
-                <!-- card header -->
-                <div class="card-header">
-                    <h4 class="mb-0">Traffic Channel</h4>
+                    <h4 class="mb-0">Themes repartition</h4>
                 </div>
                 <!-- card body -->
                 <div class="card-body">
@@ -411,71 +201,6 @@
                     </table>
                 </div>
 
-            </div>
-        </div>
-        <div class="col-12 col-md-12 col-lg-12 col-xl-4 mb-4">
-            <!-- card -->
-            <div class="card h-100">
-                <!-- card header -->
-                <div class="card-header">
-                    <h4 class="mb-0">Operating System</h4>
-                </div>
-                <!-- card body -->
-                <div class="card-body">
-                    <div id="chart7"></div>
-                    <script>
-                        window.addEventListener('load', () => {
-                            e = {
-                                series: [55, 88, 80, 75],
-                                labels: ["Window", "macOS", "Linux", "Android"],
-                                chart: {type: "polarArea", height: 350},
-                                colors: ['#5e3fcb', '#18c602', '#d30000', '#ec5328'],
-                                legend: {show: !1},
-                                stroke: {colors: ['rgba(226, 232, 240, 1)']},
-                                fill: {opacity: .9},
-                                plotOptions: {
-                                    polarArea: {
-                                        rings: {
-                                            strokeWidth: 1,
-                                            strokeColor: ['rgba(226, 232, 240, 1)']
-                                        },
-                                        spokes: {
-                                            strokeWidth: 1,
-                                            connectorColors: ['rgba(226, 232, 240, 1)', 'rgba(226, 232, 240, 1)', 'rgba(226, 232, 240, 1)', 'rgba(226, 232, 240, 1)']
-                                        }
-                                    }
-                                }
-                            };
-                            new ApexCharts(document.querySelector("#chart7"), e).render();
-                        });
-                    </script>
-                    <div class="mt-4 d-flex justify-content-center">
-                        <!-- list -->
-                        <ul class="list-inline mb-0">
-                            <li class="list-inline-item mx-3">
-                                <h5 class="mb-0 d-flex align-items-center fs-5 lh-1"><i
-                                        class="mdi mdi-square-rounded text-danger fs-5 me-2"></i>Window
-                                </h5>
-                            </li>
-                            <li class="list-inline-item mx-3">
-                                <h5 class="mb-0 d-flex align-items-center  fs-5 lh-1"><i
-                                        class="mdi mdi-square-rounded text-success fs-5 me-2"></i>macOS
-                                </h5>
-                            </li>
-                            <li class="list-inline-item mx-3">
-                                <h5 class="mb-0 d-flex align-items-center  fs-5 lh-1"><i
-                                        class="mdi mdi-square-rounded text-primary fs-5 me-2"></i>Linux
-                                </h5>
-                            </li>
-                            <li class="list-inline-item ms-3">
-                                <h5 class="mb-0 d-flex align-items-center  fs-5 lh-1"><i
-                                        class="mdi mdi-square-rounded text-info fs-5 me-2"></i>Android
-                                </h5>
-                            </li>
-                        </ul>
-
-                    </div>
-                </div>
             </div>
         </div>
     </div>
