@@ -25,7 +25,7 @@ def play(request, step):
                 themes.append(value)
         themes = themes[:3]
 
-        response = requests.get('http://127.0.0.1:8001/quizz/new_quizz/', json=themes)
+        response = requests.post('http://127.0.0.1:8001/quizz/new_quizz/', json=themes)
         questions = []
 
         for question in response.json():
@@ -87,6 +87,8 @@ def play(request, step):
                 question_fields[key] = value
             elif key.startswith('correctionQ'):
                 correction_fields[key] = value
+        print(question_fields)
+        print(correction_fields)
 
         combined_values = str(timezone.now()) + str(request.user.username)
         quiz_hash = hashlib.sha256(combined_values.encode('utf-8')).hexdigest()

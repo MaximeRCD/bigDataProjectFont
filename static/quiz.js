@@ -45,7 +45,7 @@ function onRecordButtonClick(event) {
             formData.append('user_id', '1');
             const entries = formData.entries();
 
-            fetch('http://127.0.0.1:8001/ml/prediction', {
+            fetch('https://127.0.0.1:8001/ml/prediction', {
                 method: 'POST',
                 body: formData
             }).then(function (data) {
@@ -91,8 +91,8 @@ function onAnswerButtonClick(event) {
             document.getElementById('correctionQ' + event.target.getAttribute('id')[1]).remove();
         let userCorrection = document.createElement('input');
         userCorrection.setAttribute('class', 'visually-hidden');
-        userCorrection.setAttribute('id', 'correctionQ' + event.target.getAttribute('id')[1]);
-        userCorrection.setAttribute('name', 'correctionQ' + event.target.getAttribute('id')[1]);
+        userCorrection.setAttribute('id', event.target.getAttribute('name'));
+        userCorrection.setAttribute('name', event.target.getAttribute('name'));
         userCorrection.setAttribute('value', modelResponse);
         event.target.parentNode.appendChild(userCorrection);
     }
@@ -121,26 +121,28 @@ for (let i = 0; i < answerButtons.length; i++) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    const form = document.querySelector('#create_quiz_form');
-    const checkboxes = document.querySelectorAll('input[name^="theme"]');
-    const submitButton = document.querySelector('#create_quiz');
+    if (window.location.href.includes('themes')) {
+        const form = document.querySelector('#create_quiz_form');
+        const checkboxes = document.querySelectorAll('input[name^="theme"]');
+        const submitButton = document.querySelector('#create_quiz');
 
-    form.addEventListener('submit', function(event) {
-        const selectedThemes = Array.from(checkboxes).filter(checkbox => checkbox.checked);
-
-        if (selectedThemes.length === 0 || selectedThemes.length > 3) {
-            event.preventDefault(); // Bloque l'envoi du formulaire
-        }
-    });
-
-    checkboxes.forEach(function(checkbox) {
-        checkbox.addEventListener('change', function() {
+        form.addEventListener('submit', function(event) {
             const selectedThemes = Array.from(checkboxes).filter(checkbox => checkbox.checked);
+
             if (selectedThemes.length === 0 || selectedThemes.length > 3) {
-                submitButton.classList.add('disabled');
-            } else {
-                submitButton.classList.remove('disabled');
+                event.preventDefault(); // Bloque l'envoi du formulaire
             }
         });
-    });
+
+        checkboxes.forEach(function(checkbox) {
+            checkbox.addEventListener('change', function() {
+                const selectedThemes = Array.from(checkboxes).filter(checkbox => checkbox.checked);
+                if (selectedThemes.length === 0 || selectedThemes.length > 3) {
+                    submitButton.classList.add('disabled');
+                } else {
+                    submitButton.classList.remove('disabled');
+                }
+            });
+        });
+    }
 });

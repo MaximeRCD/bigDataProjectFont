@@ -110,7 +110,7 @@
                                                 {% for response in question.response_set.all %}
                                                     <div class="d-grid mb-2 col-12 col-md-6" role="group" aria-label="Basic radio toggle button group">
                                                         <input type="radio" class="btn-check" name="q{{ question.id }}" id="q{{ question.id }}a{{ forloop.counter }}" value="{{ response.id }}">
-                                                        <label class="btn btn-outline-secondary text-start" for="q{{ question.id }}a{{ forloop.counter }}">{{ response.response }}</label>
+                                                        <label class="btn btn-outline-secondary text-start" for="q{{ question.id }}a{{ forloop.counter }}">{{ forloop.counter }} - {{ response.response }}</label>
                                                     </div>
                                                 {% endfor %}
                                             </div>

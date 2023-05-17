@@ -124,7 +124,7 @@
     <section>
         <div class="container py-8 pt-md-11 pb-md-9 border-top border-bottom">
             <div class="row">
-                <div class="col-12 col-md-8 col-lg-6">
+                <div class="col-12 col-md-7 col-lg-6">
 
                     <!-- Preheading -->
                     <h6 class="text-uppercase text-primary">
@@ -165,7 +165,7 @@
                     </div>
 
                 </div>
-                <div class="col-12 col-md-4 col-lg-6">
+                <div class="col-12 col-md-5 col-lg-6">
                     <div class="card mb-5">
                         <div class="card-body">
                             <div class="table-responsive">
@@ -173,26 +173,18 @@
                                     <thead>
                                     <tr>
                                         <th scope="col">#</th>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Points</th>
+                                        <th scope="col">Top 3 Theme</th>
+                                        <th scope="col">Questions answered</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Jacob</td>
-                                        <td>Thornton</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>Larry</td>
-                                        <td>the Bird</td>
-                                    </tr>
+                                        {% for theme in top_themes %}
+                                            <tr>
+                                                <th scope="row">{{ forloop.counter }}</th>
+                                                <td>{{ theme.theme }}</td>
+                                                <td>{{ theme.number }}</td>
+                                            </tr>
+                                        {% endfor %}
                                     </tbody>
                                 </table>
                             </div>
