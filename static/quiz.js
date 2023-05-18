@@ -45,7 +45,7 @@ function onRecordButtonClick(event) {
             formData.append('user_id', '1');
             const entries = formData.entries();
 
-            fetch('https://127.0.0.1:8001/ml/prediction', {
+            fetch('https://api-k3dvzrn44a-od.a.run.app/ml/prediction', {
                 method: 'POST',
                 body: formData
             }).then(function (data) {
