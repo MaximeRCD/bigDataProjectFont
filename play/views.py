@@ -25,7 +25,7 @@ def play(request, step):
                 themes.append(value)
         themes = themes[:3]
 
-        response = requests.post('http://127.0.0.1:8001/quizz/new_quizz/', json=themes)
+        response = requests.post('https://api-k3dvzrn44a-od.a.run.app/quizz/new_quizz', json=themes)
         questions = []
 
         for question in response.json():
