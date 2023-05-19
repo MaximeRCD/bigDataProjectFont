@@ -85,24 +85,37 @@ def play(request, step):
         print(question_fields)
         print(correction_fields)
 
-        mapping = {"un": 1, "deux": 2, "trois": 3, "quatre": 4, "oui": 1, "non": 2}
+        mapping = {"1": "un", "2": "deux", "3": "trois", "4": "quatre"}
+        mapping_correction = {"oui": "oui", "non": "non"}
         dictionnaire_final = {'user_id': 0, 'questions': {}}
 
         for key in question_fields.keys():
             question_number = key[1:]  # Récupère le numéro de la question sans le préfixe 'q'
 
-            if key in correction_fields:
+            if key not in correction_fields:
                 response_id = int(question_fields[key])
-                response_order = get_response_order(question_number, response_id)
-                model_response = correction_fields[key]
+                correction = correction_fields[key]
+
+                if correction.lower() in mapping_correction:
+                    response_order = mapping_correction[correction.lower()]
+                else:
+                    response_order = mapping[get_response_order(question_number, response_id)]
+
+                model_response = mapping[correction] if correction != "oui" and correction != "non" else correction
             else:
-                # Recherche la clé correspondante dans dictionnaire_2
+                # Recherche la clé correspondante dans correction_fields
                 corresponding_key = next((k for k in correction_fields.keys() if question_number in k), None)
 
                 if corresponding_key:
                     response_id = int(question_fields[key])
-                    response_order = get_response_order(question_number, response_id)
-                    model_response = correction_fields[corresponding_key]
+                    correction = correction_fields[corresponding_key]
+
+                    if correction.lower() in mapping_correction:
+                        response_order = mapping_correction[correction.lower()]
+                    else:
+                        response_order = mapping[get_response_order(question_number, response_id)]
+
+                    model_response = mapping[correction] if correction != "oui" and correction != "non" else correction
                 else:
                     continue
 
@@ -110,7 +123,9 @@ def play(request, step):
                 'user': response_order,
                 'model': model_response
             }
+
         dictionnaire_final['user_id'] = request.user.id
+
         print(dictionnaire_final)
 
         combined_values = str(timezone.now()) + str(request.user.username)
@@ -145,6 +160,6 @@ def get_response_order(question_id, response_id):
         question = Question.objects.get(id=question_id)
         responses = Response.objects.filter(id_question=question).order_by('id')
         response_order = next((i+1 for i, response in enumerate(responses) if response.id == response_id), None)
-        return response_order
+        return str(response_order)
     except Question.DoesNotExist:
         return None

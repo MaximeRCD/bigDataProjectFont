@@ -64,6 +64,7 @@
             </div>
         </div>
     {% elif step == 'quiz' %}
+        <p class="visually-hidden" id="user_id">{{ request.user.id }}</p>
         <div id="courseForm" class="bs-stepper">
             <div class="bs-stepper-content">
                     {% for question in questions %}
@@ -107,12 +108,34 @@
                                             <span>Question {{ forloop.counter }}</span>
                                             <h3 class="mb-3">{{ question.name }}</h3>
                                             <div class="row">
+                                            {% if question.response_set.all|length > 2 %}
                                                 {% for response in question.response_set.all %}
                                                     <div class="d-grid mb-2 col-12 col-md-6" role="group" aria-label="Basic radio toggle button group">
-                                                        <input type="radio" class="btn-check" name="q{{ question.id }}" id="q{{ question.id }}a{{ forloop.counter }}" value="{{ response.id }}">
-                                                        <label class="btn btn-outline-secondary text-start" for="q{{ question.id }}a{{ forloop.counter }}">{{ forloop.counter }} - {{ response.response }}</label>
+                                                        <input type="radio" class="btn-check" data-type-question="qcm" name="q{{ question.id }}" id="q{{ question.id }}a{{ forloop.counter }}" value="{{ response.id }}">
+                                                        <label class="btn btn-outline-secondary text-start" for="q{{ question.id }}a{{ forloop.counter }}"><span class="h5">{{ forloop.counter }}</span> - {{ response.response }}</label>
                                                     </div>
                                                 {% endfor %}
+                                            {% else %}
+                                                    {% if question.response_set.all.0.response == 'True' %}
+                                                        <div class="d-grid mb-2 col-12 col-md-6" role="group" aria-label="Basic radio toggle button group">
+                                                            <input type="radio" class="btn-check" data-type-question="truefalse" name="q{{ question.id }}" id="q{{ question.id }}a1" value="{{ question.response_set.all.0.id }}">
+                                                            <label class="btn btn-outline-secondary text-start" for="q{{ question.id }}a1">Oui</label>
+                                                        </div>
+                                                        <div class="d-grid mb-2 col-12 col-md-6" role="group" aria-label="Basic radio toggle button group">
+                                                            <input type="radio" class="btn-check" data-type-question="truefalse" name="q{{ question.id }}" id="q{{ question.id }}a2" value="{{ question.response_set.all.1.id }}">
+                                                            <label class="btn btn-outline-secondary text-start" for="q{{ question.id }}a2">Non</label>
+                                                        </div>
+                                                    {% else %}
+                                                        <div class="d-grid mb-2 col-12 col-md-6" role="group" aria-label="Basic radio toggle button group">
+                                                            <input type="radio" class="btn-check" data-type-question="truefalse" name="q{{ question.id }}" id="q{{ question.id }}a1" value="{{ question.response_set.all.1.id }}">
+                                                            <label class="btn btn-outline-secondary text-start" for="q{{ question.id }}a1">Oui</label>
+                                                        </div>
+                                                        <div class="d-grid mb-2 col-12 col-md-6" role="group" aria-label="Basic radio toggle button group">
+                                                            <input type="radio" class="btn-check" data-type-question="truefalse" name="q{{ question.id }}" id="q{{ question.id }}a2" value="{{ question.response_set.all.0.id }}">
+                                                            <label class="btn btn-outline-secondary text-start" for="q{{ question.id }}a2">Non</label>
+                                                        </div>
+                                                    {% endif %}
+                                            {% endif %}
                                             </div>
                                         </div>
                                     </div>

@@ -47,11 +47,11 @@ function onRecordButtonClick(event) {
             let chunks = [];
             chunks.push(e.data);
             const blob = new Blob(chunks, { 'type': 'audio/webm'});
-            const url = URL.createObjectURL(blob);
+
             const formData = new FormData();
             formData.append('audio', blob, 'audio/webm');
-            formData.append('question_id', '1');
-            formData.append('user_id', '1');
+            formData.append('question_id', recordButton.getAttribute('answer_name').replace('a', '').replace('q', ''));
+            formData.append('user_id', document.getElementById('user_id').textContent);
             const entries = formData.entries();
 
             fetch('https://api-k3dvzrn44a-od.a.run.app/ml/prediction', {
@@ -73,7 +73,13 @@ function onRecordButtonClick(event) {
                         userCorrection.setAttribute('class', 'visually-hidden');
                         userCorrection.setAttribute('id', 'correction_' + recordButton.getAttribute('answer_name').replace('a', ''));
                         userCorrection.setAttribute('name', 'correction_' + recordButton.getAttribute('answer_name').replace('a', ''));
-                        userCorrection.setAttribute('value', modelResponse);
+                        if (document.getElementById(recordButton.getAttribute('answer_name') + modelResponse).getAttribute('data-type-question') === "truefalse")
+                            if (modelResponse === 1)
+                                userCorrection.setAttribute('value', "oui");
+                            else
+                                userCorrection.setAttribute('value', "non");
+                        else
+                            userCorrection.setAttribute('value', modelResponse);
                         document.getElementById(recordButton.getAttribute('answer_name') + modelResponse).parentNode.appendChild(userCorrection);
 
                         if (!document.getElementById(recordButton.getAttribute('answer_name') + modelResponse)) {
@@ -119,7 +125,13 @@ function onAnswerButtonClick(event) {
         userCorrection.setAttribute('class', 'visually-hidden');
         userCorrection.setAttribute('id', 'correction_' + event.target.getAttribute('name'));
         userCorrection.setAttribute('name', 'correction_' + event.target.getAttribute('name'));
-        userCorrection.setAttribute('value', modelResponse);
+        if (event.target.getAttribute('data-type-question') === "truefalse")
+            if (modelResponse === 1)
+                userCorrection.setAttribute('value', "oui");
+            else
+                userCorrection.setAttribute('value', "non");
+        else
+            userCorrection.setAttribute('value', modelResponse);
         event.target.parentNode.appendChild(userCorrection);
     }
 }

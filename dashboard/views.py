@@ -23,16 +23,22 @@ def dashboard(request):
             context['most_choosen_theme'] = '...'
     except json.JSONDecodeError as e:
         context['most_choosen_theme'] = '...'
+    except IndexError as e:
+        context['successful_theme'] = '...'
 
     try:
         context['successful_theme'] = Theme.objects.get(id=theme_reussi.json()[0]['themeId']).theme
     except json.JSONDecodeError as e:
+        context['successful_theme'] = '...'
+    except IndexError as e:
         context['successful_theme'] = '...'
 
     try:
         context['unsuccessful_theme'] = Theme.objects.get(id=theme_moins_reussi.json()[0]['themeId']).theme
     except json.JSONDecodeError as e:
         context['unsuccessful_theme'] = '...'
+    except IndexError as e:
+        context['successful_theme'] = '...'
 
     return render(request, 'dashboard.html', context=context)
 
