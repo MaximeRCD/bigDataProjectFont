@@ -36,7 +36,6 @@ def play(request, step):
 
     elif request.method == "POST" and step == "wait-for-quiz":
         request.session['quiz']['state'] = "in_progress"
-        print(request.session['quiz'])
         return redirect('play', step="quiz")
 
     elif request.method == 'GET' and step == 'quiz':
@@ -54,26 +53,22 @@ def play(request, step):
 
         # 2. Récupérez toutes les questions associées au quiz
         questions = Question.objects.filter(quiz__in=quizs)
-        print(questions.values_list('id', flat=True))
         # 3. Comptez le nombre total de questions
         total_questions = questions.count()
 
         # Récupérez les user_answers à partir de la base de données
         user_responses = Quiz.objects.filter(quiz_hash=request.session['quiz_hash']).values_list('response_id', flat=True)
 
-        print(user_responses)
         # 4. Utilisez la liste des réponses de l'utilisateur et récupérez les réponses correctes pour chaque question en une seule requête
         correct_responses = Response.objects.filter(id__in=user_responses, is_true=True).count()
 
         # 5. Calculez le pourcentage de bonnes réponses
-        print(total_questions)
         percentage = int((correct_responses / total_questions) * 100)
 
         results = {
             'percentage': percentage,
             'numberOfGoodAnswer': correct_responses
         }
-        print(results)
         return render(request, 'play.html', context={'step': step, 'results': results, 'quiz_hash': request.session['quiz_hash']})
 
     elif request.method == "POST" and step == 'create_quizz':
@@ -85,10 +80,38 @@ def play(request, step):
         for key, value in questions_responses.items():
             if key.startswith('q'):
                 question_fields[key] = value
-            elif key.startswith('correctionQ'):
+            elif key.startswith('correction_'):
                 correction_fields[key] = value
         print(question_fields)
         print(correction_fields)
+
+        mapping = {"un": 1, "deux": 2, "trois": 3, "quatre": 4, "oui": 1, "non": 2}
+        dictionnaire_final = {}
+
+        for key in question_fields.keys():
+            question_number = key[1:]  # Récupère le numéro de la question sans le préfixe 'q'
+
+            if key in correction_fields:
+                response_id = int(question_fields[key])
+                response_order = get_response_order(question_number, response_id)
+                model_response = correction_fields[key]
+            else:
+                # Recherche la clé correspondante dans dictionnaire_2
+                corresponding_key = next((k for k in correction_fields.keys() if question_number in k), None)
+
+                if corresponding_key:
+                    response_id = int(question_fields[key])
+                    response_order = get_response_order(question_number, response_id)
+                    model_response = correction_fields[corresponding_key]
+                else:
+                    continue
+
+            dictionnaire_final[question_number] = {
+                'user': response_order,
+                'model': model_response
+            }
+        dictionnaire_final['user_id'] = request.user.id
+        print(dictionnaire_final)
 
         combined_values = str(timezone.now()) + str(request.user.username)
         quiz_hash = hashlib.sha256(combined_values.encode('utf-8')).hexdigest()
@@ -115,3 +138,13 @@ def get_questions(request, themes):
 def fake_model(request):
     response = '{"predicted_label": '+str(random.randint(1, 4))+'}'
     return HttpResponse(response)
+
+
+def get_response_order(question_id, response_id):
+    try:
+        question = Question.objects.get(id=question_id)
+        responses = Response.objects.filter(id_question=question).order_by('id')
+        response_order = next((i+1 for i, response in enumerate(responses) if response.id == response_id), None)
+        return response_order
+    except Question.DoesNotExist:
+        return None

@@ -4,6 +4,15 @@ let recorder;
 let stream;
 let modelResponse, userResponse;
 
+const mapping = {
+    "un": 1,
+    "deux": 2,
+    "trois": 3,
+    "quatre": 4,
+    "oui": 1,
+    "non": 2
+};
+
 async function startRecording(recordButton) {
     stream = await navigator.mediaDevices.getUserMedia({audio: true});
     recorder = new MediaRecorder(stream);
@@ -55,7 +64,17 @@ function onRecordButtonClick(event) {
                     recordButton.firstElementChild.remove();
                     recordButton.appendChild(icon);
                     data.json().then((result) => {
-                        modelResponse = result.predicted_label;
+                        console.log(result);
+                        modelResponse = mapping[result.predicted_label];
+
+                        if (document.getElementById('correction_' + recordButton.getAttribute('answer_name').replace('a', '')))
+                            document.getElementById('correction_' + recordButton.getAttribute('answer_name').replace('a', '')).remove();
+                        let userCorrection = document.createElement('input');
+                        userCorrection.setAttribute('class', 'visually-hidden');
+                        userCorrection.setAttribute('id', 'correction_' + recordButton.getAttribute('answer_name').replace('a', ''));
+                        userCorrection.setAttribute('name', 'correction_' + recordButton.getAttribute('answer_name').replace('a', ''));
+                        userCorrection.setAttribute('value', modelResponse);
+                        document.getElementById(recordButton.getAttribute('answer_name') + modelResponse).parentNode.appendChild(userCorrection);
 
                         if (!document.getElementById(recordButton.getAttribute('answer_name') + modelResponse)) {
                             let toastEl = document.querySelector('.toast');
@@ -86,13 +105,20 @@ function onAnswerButtonClick(event) {
     if (modelResponse == null) {
         event.target.checked = false;
     } else {
-        userResponse = event.target.getAttribute('id')[3];
-        if (document.getElementById('correctionQ' + event.target.getAttribute('id')[1]))
-            document.getElementById('correctionQ' + event.target.getAttribute('id')[1]).remove();
+        const regex = /a(\d+)/;
+        const match = event.target.getAttribute('id').match(regex);
+
+        if (match) {
+            userResponse = match[1];
+        } else {
+            console.log("No match found.");
+        }
+        if (document.getElementById('correction_' + event.target.getAttribute('name')))
+            document.getElementById('correction_' + event.target.getAttribute('name')).remove();
         let userCorrection = document.createElement('input');
         userCorrection.setAttribute('class', 'visually-hidden');
-        userCorrection.setAttribute('id', event.target.getAttribute('name'));
-        userCorrection.setAttribute('name', event.target.getAttribute('name'));
+        userCorrection.setAttribute('id', 'correction_' + event.target.getAttribute('name'));
+        userCorrection.setAttribute('name', 'correction_' + event.target.getAttribute('name'));
         userCorrection.setAttribute('value', modelResponse);
         event.target.parentNode.appendChild(userCorrection);
     }
