@@ -86,7 +86,7 @@ def play(request, step):
         print(correction_fields)
 
         mapping = {"un": 1, "deux": 2, "trois": 3, "quatre": 4, "oui": 1, "non": 2}
-        dictionnaire_final = {}
+        dictionnaire_final = {'user_id': 0, 'questions': {}}
 
         for key in question_fields.keys():
             question_number = key[1:]  # Récupère le numéro de la question sans le préfixe 'q'
@@ -106,7 +106,7 @@ def play(request, step):
                 else:
                     continue
 
-            dictionnaire_final[question_number] = {
+            dictionnaire_final['questions'][question_number] = {
                 'user': response_order,
                 'model': model_response
             }
