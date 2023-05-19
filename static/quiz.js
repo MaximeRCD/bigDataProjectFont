@@ -87,6 +87,7 @@ function onRecordButtonClick(event) {
                             let toast = new bootstrap.Toast(toastEl);
                             toast.show();
                         } else {
+                            document.getElementById(recordButton.getAttribute('answer_name') + modelResponse).parentNode.innerHTML += '<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">'+parseInt(result.accuracy*100)+'%</span>';
                             document.getElementById(recordButton.getAttribute('answer_name') + modelResponse).checked = true;
                             document.getElementById('nextQ' + recordButton.getAttribute('answer_name').replace('q', '').replace('a', '')).classList.remove('disabled');
                         }
