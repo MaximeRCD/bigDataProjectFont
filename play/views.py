@@ -127,14 +127,15 @@ def play(request, step):
         dictionnaire_final["user_id"] = request.user.id
         response = requests.post('https://api-k3dvzrn44a-od.a.run.app/ml/saveAudio', json=dictionnaire_final)
 
-        combined_values = str(timezone.now()) + str(request.user.username)
+        created_at = timezone.now()
+        combined_values = str(created_at) + str(request.user.username)
         quiz_hash = hashlib.sha256(combined_values.encode('utf-8')).hexdigest()
         for question, response in question_fields.items():
             quiz = Quiz()
             quiz.user_id = request.user
             quiz.response_id = Response.objects.get(id=response)
             quiz.question_id = Question.objects.get(id=question.replace('q', ''))
-            quiz.created_at = timezone.now()
+            quiz.created_at = created_at
             quiz.quiz_hash = quiz_hash
             quiz.save()
         request.session['quiz']['state'] = "terminated"
