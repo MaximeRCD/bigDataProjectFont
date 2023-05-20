@@ -37,7 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'landing'
+    'landing',
+    'dashboard',
+    'play',
+    'user_settings',
+    'authenticate',
+    'custom_tags',
+    'quiz'
 ]
 
 MIDDLEWARE = [
@@ -57,7 +63,12 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             BASE_DIR / 'templates',
-            BASE_DIR / 'landing/templates/landing'
+            BASE_DIR / 'landing/templates',
+            BASE_DIR / 'dashboard/templates',
+            BASE_DIR / 'play/templates',
+            BASE_DIR / 'user_settings/templates',
+            BASE_DIR / 'authenticate/templates',
+            BASE_DIR / 'quiz/templates'
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -76,11 +87,20 @@ WSGI_APPLICATION = 'BigDataProject.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
+"""
+'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db-project.sqlite3',
+    }
+"""
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'db-project',
+        'USER': 'front-django',
+        'PASSWORD': '0jJ{hxv*g4O`+@{B',
+        'HOST': '34.163.143.66',
+        'PORT': '3306',
     }
 }
 
@@ -126,3 +146,7 @@ STATICFILES_DIRS = ['static/']
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_REDIRECT_URL = 'dashboard'
+
+AUTH_USER_MODEL = 'authenticate.User'

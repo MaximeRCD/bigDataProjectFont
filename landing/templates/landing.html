@@ -1,0 +1,288 @@
+{% extends 'base_landing.html' %}
+{% load static %}
+
+{% block content %}
+    <!-- WELCOME -->
+    <section data-jarallax data-speed=".8" class="pt-5 pt-md-12 pb-12 pb-md-15 overlay overlay-primary overlay-80 jarallax"
+             style="background-image: url({% static 'brain.jpg' %});">
+
+        <!-- Content -->
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-8 text-center">
+
+                    <h1 class="justify-content-center text-white">Brain Busters</h1>
+                    <!-- Heading -->
+                    <div class="row justify-content-center mb-6"><img class="w-25" src="{% static 'logo.png' %}"></div>
+
+                    <!-- Button -->
+                    {% if request.user.is_authenticated %}
+                        <a class="btn btn-pill btn-white shadow lift" href="{% url 'dashboard' %}">
+                            Get Started
+                        </a>
+                    {% else %}
+                        <a class="btn btn-pill btn-white shadow lift" href="{% url 'signin' %}">
+                            Get Started
+                        </a>
+                    {% endif %}
+
+                </div>
+            </div> <!-- / .row -->
+        </div> <!-- / .container -->
+
+        <!-- Shape -->
+        <div class="position-absolute right-0 bottom-0 left-0">
+
+            <!-- Shape -->
+            <div class="position-relative shape shape-bottom shape-fluid-x text-white">
+                <svg viewBox="0 0 2880 250" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M720 125L2160 0h720v250H0V125h720z" fill="currentColor"/>
+                </svg>
+            </div>
+
+            <!-- Button -->
+            <div class="position-absolute center">
+                <a class="btn btn-light btn-rounded-circle lift" data-scroll href="#payItDown">
+                    <i class="fe fe-arrow-down"></i>
+                </a>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- HOW ? -->
+    <section class="pt-8 pt-md-11 pb-10" id="payItDown">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-10 col-lg-8 text-center">
+
+                    <!-- Badge -->
+                    <span class="badge rounded-pill bg-primary-soft mb-3">
+                  <span class="h6 text-uppercase">How ?</span>
+                </span>
+
+                    <!-- Heading -->
+                    <h1>
+                        <span class="text-primary">Learn</span> in 3 steps.
+                    </h1>
+
+                    <!-- Text -->
+                    <p class="lead text-gray-700 mb-7 mb-md-9">
+                        Customized quizzes tailored to your interests... In no time at all...
+                    </p>
+
+                </div>
+            </div>
+            <div class="row align-items-center">
+                <div class="col-12">
+                    <div class="d-flex">
+                        <div class="badge badge-lg badge-rounded-circle bg-primary-soft mt-1">
+                            <span>1</span>
+                        </div>
+                        <div class="ms-5">
+                            <h3>
+                                Sign up
+                            </h3>
+                            <p class="text-gray-700 mb-6">
+                                Quickly sign up to access all the features of the site.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <div class="badge badge-lg badge-rounded-circle bg-primary-soft mt-1">
+                            <span>2</span>
+                        </div>
+                        <div class="ms-5">
+                            <h3>
+                                Select Themes
+                            </h3>
+                            <p class="text-gray-700 mb-6">
+                                Choose your favorite themes to generate a personalized quiz.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="d-flex">
+                        <div class="badge badge-lg badge-rounded-circle bg-primary-soft mt-1">
+                            <span>3</span>
+                        </div>
+                        <div class="ms-5">
+                            <h3>
+                                Learn and Play
+                            </h3>
+                            <p class="text-gray-700 mb-0">
+                                Answer questions and expand your knowledge while having fun.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- / .row -->
+        </div> <!-- / .container -->
+    </section>
+
+    <!-- Numbers -->
+    <section>
+        <div class="container py-8 pt-md-11 pb-md-9 border-top border-bottom">
+            <div class="row">
+                <div class="col-12 col-md-7 col-lg-6">
+
+                    <!-- Preheading -->
+                    <h6 class="text-uppercase text-primary">
+                        A few figures
+                    </h6>
+
+                    <!-- Heading -->
+                    <h2 class="mb-6 mb-md-8">
+                        BrainBusters is the ultimate online quiz platform, boasting an extensive range of topics and an active user base.
+                    </h2>
+
+                    <!-- Stats -->
+                    <div class="d-flex">
+                        <div class="pe-5">
+                            <h3 class="mb-0">
+                                <span data-countup='{"startVal": 0}' data-to="{{ users_number }}" data-aos data-aos-id="countup:in"></span>
+                            </h3>
+                            <p class="text-gray-700 mb-0">
+                                Joueurs
+                            </p>
+                        </div>
+                        <div class="px-5">
+                            <h3 class="mb-0">
+                                <span data-countup='{"startVal": 0}' data-to="{{ quiz_number }}" data-aos data-aos-id="countup:in"></span>
+                            </h3>
+                            <p class="text-gray-700 mb-0">
+                                Quizz
+                            </p>
+                        </div>
+                        <div class="ps-5">
+                            <h3 class="mb-0">
+                                <span data-countup='{"startVal": 0}' data-to="{{ questions_number }}" data-aos data-aos-id="countup:in"></span>
+                            </h3>
+                            <p class="text-gray-700 mb-0">
+                                Questions
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-12 col-md-5 col-lg-6">
+                    <div class="card mb-5">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Top 3 Theme</th>
+                                        <th scope="col">Questions answered</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for theme in top_themes %}
+                                            <tr>
+                                                <th scope="row">{{ forloop.counter }}</th>
+                                                <td>{{ theme.theme }}</td>
+                                                <td>{{ theme.number }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- / .row -->
+        </div> <!-- / .container -->
+    </section>
+
+    <!-- WHO ? -->
+    <section class="pt-8 pt-md-11">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-10 col-lg-8 text-center">
+                <span class="badge rounded-pill bg-primary-soft mb-3">
+              <span class="h6 text-uppercase">Who ?</span>
+            </span>
+                <h1>
+                    Our <span class="text-primary">team</span>.
+                </h1>
+                <p class="lead text-gray-700 mb-7 mb-md-9">
+                    Discover the dedicated individuals behind our platform's success...
+                </p>
+            </div>
+        </div> <!-- / .row -->
+        <div class="row">
+            <div class="col-12 col-md-3">
+                <!-- Card -->
+                <div class="card card-border border-primary shadow-lg mb-6 mb-md-8 lift lift-lg">
+                    <div class="card-body text-center">
+                        <div class="avatar avatar-xxl mb-3">
+                            <img src="{% static 'Landkit/img/avatars/avatar-1.jpg' %}" alt="..."
+                                 class="avatar-img rounded-circle">
+                        </div>
+                        <h4 class="fw-bold">
+                            Guillaume
+                        </h4>
+                        <p class="text-gray-700 mb-5">
+                            DevOps & Cloud
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-3">
+                <!-- Card -->
+                <div class="card card-border border-warning shadow-lg mb-6 mb-md-8 lift lift-lg">
+                    <div class="card-body text-center">
+                        <div class="avatar avatar-xxl mb-3">
+                            <img src="{% static 'Landkit/img/avatars/avatar-1.jpg' %}" alt="..."
+                                 class="avatar-img rounded-circle">
+                        </div>
+                        <h4 class="fw-bold">
+                            Issa
+                        </h4>
+                        <p class="text-gray-700 mb-5">
+                            Backend
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-3">
+                <!-- Card -->
+                <div class="card card-border border-danger shadow-lg mb-6 mb-md-8 lift lift-lg">
+                    <div class="card-body text-center">
+
+                        <div class="avatar avatar-xxl mb-3">
+                            <img src="{% static 'Landkit/img/avatars/avatar-1.jpg' %}" alt="..."
+                                 class="avatar-img rounded-circle">
+                        </div>
+                        <h4 class="fw-bold">
+                            Maxime
+                        </h4>
+                        <p class="text-gray-700 mb-5">
+                            Machine Learning
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-3">
+                <!-- Card -->
+                <div class="card card-border border-info shadow-lg mb-6 mb-md-8 lift lift-lg">
+                    <div class="card-body text-center">
+                        <div class="avatar avatar-xxl mb-3">
+                            <img src="{% static 'Landkit/img/avatars/avatar-1.jpg' %}" alt="..."
+                                 class="avatar-img rounded-circle">
+                        </div>
+                        <h4 class="fw-bold">
+                            Victor
+                        </h4>
+                        <p class="text-gray-700 mb-5">
+                            Frontend
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- / .row -->
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,197 @@
+{% extends 'base_dashboard.html' %}
+{% load static %}
+{% block header_pretitle %}overview{% endblock %}
+{% block header_title %}Settings{% endblock %}
+{% block content %}
+    <ul class="nav nav-tabs nav-tabs-sm">
+        <li class="nav-item">
+            <a href="{% url 'user_settings' 'general' %}" class="nav-link {% if menu == 'general' %}active{% endif %}">
+                General
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'user_settings' 'security' %}"
+               class="nav-link {% if menu == 'security' %}active{% endif %}">
+                Security
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#" class="nav-link text-danger">
+                Delete account
+            </a>
+        </li>
+    </ul>
+    {% if menu == 'general' %}
+        <div class="row mt-5">
+            <div class="col-12 col-md-6">
+
+                <!-- First name -->
+                <div class="form-group">
+
+                    <!-- Label -->
+                    <label class="form-label">
+                        First name
+                    </label>
+
+                    <!-- Input -->
+                    <input type="text" class="form-control">
+
+                </div>
+
+            </div>
+            <div class="col-12 col-md-6">
+
+                <!-- Last name -->
+                <div class="form-group">
+
+                    <!-- Label -->
+                    <label class="form-label">
+                        Last name
+                    </label>
+
+                    <!-- Input -->
+                    <input type="text" class="form-control">
+
+                </div>
+
+            </div>
+            <div class="col-12">
+
+                <!-- Email address -->
+                <div class="form-group">
+
+                    <!-- Label -->
+                    <label class="mb-1">
+                        Email address
+                    </label>
+
+                    <!-- Form text -->
+                    <small class="form-text text-muted">
+                        This contact will be shown to others publicly, so choose it carefully.
+                    </small>
+
+                    <!-- Input -->
+                    <input type="email" class="form-control">
+
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-3">
+                <!-- Submit -->
+                <button class="btn w-100 btn-primary lift" type="submit">
+                    Update infos
+                </button>
+            </div>
+        </div>
+    {% endif %}
+    {% if menu == 'security' %}
+        <div class="row justify-content-between align-items-center mt-5 mb-5">
+            <div class="col-12 col-md-9 col-xl-7">
+
+                <!-- Heading -->
+                <h2 class="mb-2">
+                    Change your password
+                </h2>
+
+                <!-- Text -->
+                <p class="text-muted mb-xl-0">
+                    We will email you a confirmation when changing your password, so please expect that email after
+                    submitting.
+                </p>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-6 order-md-2">
+
+                <!-- Card -->
+                <div class="card bg-light border ms-md-4">
+                    <div class="card-body">
+
+                        <!-- Text -->
+                        <p class="mb-2">
+                            Password requirements
+                        </p>
+
+                        <!-- Text -->
+                        <p class="small text-muted mb-2">
+                            To create a new password, you have to meet all of the following requirements:
+                        </p>
+
+                        <!-- List group -->
+                        <ul class="small text-muted ps-4 mb-0">
+                            <li>
+                                Minimum 8 character
+                            </li>
+                            <li>
+                                At least one special character
+                            </li>
+                            <li>
+                                At least one number
+                            </li>
+                            <li>
+                                Can’t be the same as a previous password
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-12 col-md-6">
+
+                <!-- Form -->
+                <form>
+
+                    <!-- Password -->
+                    <div class="form-group">
+
+                        <!-- Label -->
+                        <label class="form-label">
+                            Current password
+                        </label>
+
+                        <!-- Input -->
+                        <input type="password" class="form-control">
+
+                    </div>
+
+                    <!-- New password -->
+                    <div class="form-group">
+
+                        <!-- Label -->
+                        <label class="form-label">
+                            New password
+                        </label>
+
+                        <!-- Input -->
+                        <input type="password" class="form-control">
+
+                    </div>
+
+                    <!-- Confirm new password -->
+                    <div class="form-group">
+
+                        <!-- Label -->
+                        <label class="form-label">
+                            Confirm new password
+                        </label>
+
+                        <!-- Input -->
+                        <input type="password" class="form-control">
+
+                    </div>
+
+                    <!-- Submit -->
+                    <button class="btn w-100 btn-primary lift" type="submit">
+                        Update password
+                    </button>
+
+                </form>
+
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

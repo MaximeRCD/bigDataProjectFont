@@ -1,0 +1,170 @@
+{% extends 'base_dashboard.html' %}
+{% load static %}
+
+{% block header_title %}Dashboard{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-xl-4 col-lg-6 col-md-12 col-12 mb-4">
+            <!-- card -->
+            <div class="card h-100">
+                <!-- card body -->
+                <div class="card-body">
+                    <div class="row">
+                        <!-- col -->
+                        <div class="col-12">
+                            <span class="fw-semi-bold text-uppercase fs-6">Successful theme</span>
+                        </div>
+                        <!-- col -->
+                        <div class="col-6">
+                            <h3 class="fw-bold mt-2 mb-0 h3">{{ successful_theme }}</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-lg-6 col-md-12 col-12 mb-4">
+            <!-- card -->
+            <div class="card h-100">
+                <!-- card body -->
+                <div class="card-body">
+                    <div class="row">
+                        <!-- col -->
+                        <div class="col-12">
+                            <span class="fw-semi-bold text-uppercase fs-6">Unsuccessful theme</span>
+                        </div>
+                        <!-- col -->
+                        <div class="col-6">
+                            <h3 class="fw-bold mt-2 mb-0 h3">{{ unsuccessful_theme }}</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-lg-6 col-md-12 col-12 mb-4">
+            <!-- card -->
+            <div class="card h-100">
+                <!-- card body -->
+                <div class="card-body">
+                    <div class="row">
+                        <!-- col -->
+                        <div class="col-12">
+                            <span class="fw-semi-bold text-uppercase fs-6">Member since</span>
+                        </div>
+                        <!-- col -->
+                        <div class="col-6">
+                            <h3 class="fw-bold mt-2 mb-0 h3">{{ menber_since }}</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-8 col-lg-8 col-md-12 col-12 mb-4">
+            <!-- card -->
+            <div class="card h-100">
+                <!-- card header -->
+                <div class="card-header">
+                    <h4 class="mb-0">Created quiz</h4>
+                </div>
+                <!-- card body -->
+                <div class="card-body">
+                    <div class="row">
+                        <!-- col -->
+                        <div class="col-4">
+                            <span class="fw-semi-bold">30 days</span>
+                            <h1 class="fw-bold mt-2 mb-0 h2">{{ quizzes_last_30_days }}</h1>
+                        </div>
+                        <!-- col -->
+                        <div class="col-4">
+                            <span class="fw-semi-bold">7 days</span>
+                            <h1 class="fw-bold mt-2 mb-0 h2">{{ quizzes_last_7_days }}</h1>
+                        </div>
+                        <!-- col -->
+                        <div class="col-4">
+                            <span class="fw-semi-bold">Today</span>
+                            <h1 class="fw-bold mt-2 mb-0 h2">{{ quizzes_today }}</h1>
+                        </div>
+                    </div>
+                    <!-- chart -->
+                    <div id="chart5"></div>
+                    <script>
+                        window.addEventListener('load', () => {
+                            e = {
+                                chart: {type: "bar", height: 302, sparkline: {enabled: !0}},
+                                states: {
+                                    normal: {filter: {type: "none", value: 0}},
+                                    hover: {filter: {type: "darken", value: .55}},
+                                    active: {allowMultipleDataPointsSelection: !1, filter: {type: "darken", value: .55}}
+                                },
+                                colors: ['#5e3fcb'],
+                                plotOptions: {bar: {borderRadius: 4, columnWidth: "50%"}},
+                                series: [{data: {{ quizzes_list|safe }} }],
+                                xaxis: {crosshairs: {width: 1}},
+                                tooltip: {
+                                    fixed: {enabled: !1}, x: {show: !1}, y: {
+                                        title: {
+                                            formatter: function (e) {
+                                                return "Active User"
+                                            }
+                                        }
+                                    }, marker: {show: !1}
+                                }
+                            };
+                            new ApexCharts(document.querySelector("#chart5"), e).render();
+                        });
+                    </script>
+                    <div class="fs-6 d-flex justify-content-between mt-2 ps-2">
+                        <div class="chart-label">{{ first_date }}</div>
+                        <div class="chart-label">{{ last_date }}</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-xl-4 col-lg-4 col-md-12 col-12 mb-4">
+            <!-- card -->
+            <div class="card h-100">
+                <!-- card header -->
+                <div class="card-header">
+                    <h4 class="mb-0">Themes repartition</h4>
+                </div>
+                <!-- card body -->
+                <div class="card-body">
+                    <!-- chart -->
+                    <div id="chart6"></div>
+                    <script>
+                        window.addEventListener('load', () => {
+                            e = {
+                                series: {{ percentage_per_theme }},
+                                labels: {{ themes|safe }},
+                                colors: {{ colors|safe }},
+                                chart: {type: "donut", height: 260},
+                                legend: {show: !1},
+                                dataLabels: {enabled: !1},
+                                plotOptions: {pie: {donut: {size: "60%"}}},
+                                stroke: {width: 2, colors: ['rgba(0,0,0,0)']}
+                            };
+                            new ApexCharts(document.querySelector("#chart6"), e).render();
+                        });
+                    </script>
+                    <!-- table -->
+
+
+                    <table class="table table-sm table-borderless  mb-0 mt-5">
+                        <tbody>
+                        {% for color, theme, percentage in legend %}
+                            <tr>
+                                <td><i class="mdi mdi-square-rounded text-{{ color }} fs-5 me-2"></i>{{ theme }}</td>
+                                <td>{{ percentage }}%</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

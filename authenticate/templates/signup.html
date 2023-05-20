@@ -1,0 +1,73 @@
+{% extends 'base_landing.html' %}
+{% load static %}
+{% block content %}
+    <section class="section-border border-primary">
+        <div class="container d-flex flex-column">
+            <div class="row align-items-center justify-content-center gx-0 min-vh-100">
+                <div class="col-12 col-md-5 col-lg-4 py-8 py-md-11">
+                    <div class="row text-center">
+                        <a href="{% url 'home' %}">
+                            <img class="w-25 text-center" src="{% static 'brainbuster.png' %}" alt="">
+                        </a>
+                    </div>
+                    <!-- Heading -->
+                    <h1 class="mb-0 fw-bold text-center">
+                        Sign in
+                    </h1>
+
+                    <!-- Text -->
+                    <p class="mb-6 text-center text-muted">
+                        Simplify your workflow in minutes.
+                    </p>
+
+                    <!-- Form -->
+                    <form class="mb-6" method="post">
+                        {% csrf_token %}
+                        {{ message }}
+
+                        <!-- Email -->
+                        <div class="form-group">
+                            <label class="form-label" for="username">{{ form.username.label }}</label>
+                            {{ form.username }}
+                        </div>
+
+                        <!-- Password -->
+                        <div class="form-group mb-5">
+                            <label class="form-label" for="password1">
+                                {{ form.password1.label }}
+                            </label>
+                            {{ form.password1 }}
+                        </div>
+
+                        <!-- Password -->
+                        <div class="form-group mb-5">
+                            <label class="form-label" for="password2">
+                                {{ form.password2.label }}
+                            </label>
+                            {{ form.password2 }}
+                        </div>
+
+                        <!-- Submit -->
+                        <button class="btn w-100 btn-primary" type="submit">
+                            Sign in
+                        </button>
+
+                    </form>
+
+                    <!-- Text -->
+                    <div class="mb-0 fs-sm text-center text-muted">
+                        {% if user.is_authenticated %}
+                            <small>Vous êtes connecté en tant que {{ request.user }}.
+                            <a href="{% url 'signout' %}">Se déconnecter</a></small>
+                        {% else %}
+                            <div class="small">
+                                Already have an account ? <a href="{% url 'signin' %}">Sign in</a>.
+                            </div>
+                        {% endif %}
+                    </div>
+
+                </div>
+            </div> <!-- / .row -->
+        </div> <!-- / .container -->
+    </section>
+{% endblock %}

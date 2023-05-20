@@ -1,0 +1,53 @@
+{% extends 'base_dashboard.html' %}
+{% load static %}
+{% block header_title %}Quiz Review{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <!-- Card header -->
+        <div class="card-header">
+            <div class="mb-3 mb-lg-0">
+                <h3 class="mb-1">My Quiz Attempt</h3>
+                <p class="mb-0">You can find all of your quiz.</p>
+            </div>
+        </div>
+        <!-- table -->
+        <div class="table-responsive">
+            <table class="table text-nowrap text-lg-wrap table-hover table-centered">
+                <thead class="table-light">
+                <tr>
+                    <th>Quiz Info</th>
+                    <th>Questions</th>
+                    <th>Correct</th>
+                    <th>Incorrect</th>
+                    <th>Marks</th>
+                    <th>Result</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for quiz_hash, info in quiz_info.items %}
+                    <tr>
+                        <td>
+                            <div>
+                                <a href="{% url 'quiz_attempt' quiz_hash %}">
+                                    <h5 class="mb-1">{{ info.themes }}</h5>
+                                </a>
+                                <small>{{ info.quiz_date }}</small>
+                            </div>
+                        </td>
+                        <td>{{ info.total_questions }}</td>
+                        <td>{{ info.numberOfGoodAnswer }}</td>
+                        <td>{{ info.numberOfBadAnswer }}</td>
+                        <td>{{ info.points }} ({{ info.percentage }}%)</td>
+                        {% if info.percentage >= 75 %}
+                            <td><span class="badge bg-success-soft">Pass</span></td>
+                        {% else %}
+                            <td><span class="badge bg-danger-soft">Fail</span></td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

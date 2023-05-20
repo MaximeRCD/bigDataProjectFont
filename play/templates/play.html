@@ -1,0 +1,231 @@
+{% extends 'base_dashboard.html' %}
+{% load custom_filters %}
+{% load static %}
+{% block header_title %}
+    {% if step == 'themes' %}
+        Choose up to 3 themes
+    {% elif step == 'wait-for-quiz' %}
+        Start your quiz
+    {% elif step == 'quiz' %}
+        Quiz
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    {% if step == 'themes' %}
+        <form method="post" id="create_quiz_form">
+            {% csrf_token %}
+            <div class="row">
+                {% for theme in themes %}
+                    <div class="col-md-6 col-12 col-lg-4 mb-2">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col-auto">
+
+                                        <!-- Avatar -->
+                                        <div class="avatar avatar-4by3">
+                                            <img src="{% static 'theme.png' %}" alt="..."
+                                                 class="avatar-img rounded">
+                                        </div>
+
+                                    </div>
+                                    <div class="col ms-n2">
+                                        <!-- Title -->
+                                        <h4 class="mb-1">{{ theme.theme }}</h4>
+                                    </div>
+                                    <div class="col-auto">
+                                        <input name="theme{{ theme.id }}" class="form-check-input" type="checkbox" id="theme{{ theme.id }}" value="{{ theme.id }}">
+                                    </div>
+                                </div> <!-- / .row -->
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-3 col-12">
+                    <button type="submit" id="create_quiz" class="disabled btn btn-primary mb-2 lift">Create Quiz</button>
+                </div>
+            </div>
+        </form>
+    {% elif step == 'wait-for-quiz' %}
+        <div class="text-center">
+            <!-- img -->
+            <img src="{% static 'Geek/images/svg/survey-img.svg' %}" alt="" class="img-fluid">
+            <!-- text -->
+            <div class="px-lg-18">
+                <h1>Welcome to Quiz</h1>
+                <p class="mb-0">Your quiz is ready, just one more step, click the button below.</p>
+                <form method="post">
+                    {% csrf_token %}
+                    <button name="start_quiz" class="btn btn-primary mt-4">Start Your Quiz</button>
+                </form>
+            </div>
+        </div>
+    {% elif step == 'quiz' %}
+        <p class="visually-hidden" id="user_id">{{ request.user.id }}</p>
+        <div id="courseForm" class="bs-stepper">
+            <div class="bs-stepper-content">
+                    {% for question in questions %}
+                        <div class=" " role="tablist">
+                            <div class="step" data-target="#test-l-{{ question.id }}">
+                                <div class="step-trigger visually-hidden" role="tab" id="courseFormtrigger{{ question.id }}" aria-controls="test-l-{{ question.id }}"></div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <form id="quizForm" onsubmit="return false">
+                        {% csrf_token %}
+                        {% for question in questions %}
+                            <div id="test-l-{{ question.id }}" role="tabpanel" class="bs-stepper-pane fade">
+                                <div class="card mb-4">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-3">
+                                            <div class="d-flex align-items-center">
+                                                <div class="ms-3">
+                                                    <h3 class="mb-0"><a href="#" class="text-inherit">{{ themes }}</a></h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3">
+                                            <div class="d-flex justify-content-between">
+                                                <span>Quiz Progress:</span>
+                                                <span> Question {{ forloop.counter }} out of {{ questions.count }}</span>
+                                            </div>
+                                            <div class="mt-2">
+                                                <div class="progress" style="height: 6px;">
+                                                    {% with displayed_questions=forloop.counter %}
+                                                        {% with total_questions=questions.count %}
+                                                            {% with percent_complete=displayed_questions|floatformat:2|multiply:100.0|divide:total_questions|floatformat:2 %}
+                                                                <div class="progress-bar bg-success" role="progressbar" style="width: {{ percent_complete }}%" aria-valuenow="{{ percent_complete }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                                            {% endwith %}
+                                                        {% endwith %}
+                                                    {% endwith %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-5">
+                                            <span>Question {{ forloop.counter }}</span>
+                                            <h3 class="mb-3">{{ question.name }}</h3>
+                                            <div class="row">
+                                            {% if question.response_set.all|length > 2 %}
+                                                {% for response in question.response_set.all %}
+                                                    <div class="d-grid mb-2 col-12 col-md-6" role="group" aria-label="Basic radio toggle button group">
+                                                        <input type="radio" class="btn-check" data-type-question="qcm" name="q{{ question.id }}" id="q{{ question.id }}a{{ forloop.counter }}" value="{{ response.id }}">
+                                                        <label class="btn btn-outline-secondary text-start" for="q{{ question.id }}a{{ forloop.counter }}"><span class="h5">{{ forloop.counter }}</span> - {{ response.response }}</label>
+                                                    </div>
+                                                {% endfor %}
+                                            {% else %}
+                                                    {% if question.response_set.all.0.response == 'True' %}
+                                                        <div class="d-grid mb-2 col-12 col-md-6" role="group" aria-label="Basic radio toggle button group">
+                                                            <input type="radio" class="btn-check" data-type-question="truefalse" name="q{{ question.id }}" id="q{{ question.id }}a1" value="{{ question.response_set.all.0.id }}">
+                                                            <label class="btn btn-outline-secondary text-start" for="q{{ question.id }}a1">Oui</label>
+                                                        </div>
+                                                        <div class="d-grid mb-2 col-12 col-md-6" role="group" aria-label="Basic radio toggle button group">
+                                                            <input type="radio" class="btn-check" data-type-question="truefalse" name="q{{ question.id }}" id="q{{ question.id }}a2" value="{{ question.response_set.all.1.id }}">
+                                                            <label class="btn btn-outline-secondary text-start" for="q{{ question.id }}a2">Non</label>
+                                                        </div>
+                                                    {% else %}
+                                                        <div class="d-grid mb-2 col-12 col-md-6" role="group" aria-label="Basic radio toggle button group">
+                                                            <input type="radio" class="btn-check" data-type-question="truefalse" name="q{{ question.id }}" id="q{{ question.id }}a1" value="{{ question.response_set.all.1.id }}">
+                                                            <label class="btn btn-outline-secondary text-start" for="q{{ question.id }}a1">Oui</label>
+                                                        </div>
+                                                        <div class="d-grid mb-2 col-12 col-md-6" role="group" aria-label="Basic radio toggle button group">
+                                                            <input type="radio" class="btn-check" data-type-question="truefalse" name="q{{ question.id }}" id="q{{ question.id }}a2" value="{{ question.response_set.all.0.id }}">
+                                                            <label class="btn btn-outline-secondary text-start" for="q{{ question.id }}a2">Non</label>
+                                                        </div>
+                                                    {% endif %}
+                                            {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <button answer_name="q{{ question.id }}a" class="btn btn-primary recordButton"><i class="fe fe-mic"></i></button>
+                                    {% if not forloop.last %}
+                                        <button id="nextQ{{ question.id }}" class="btn btn-primary disabled" onclick="resetAnswer();courseForm.next();">Next <i class="fe fe-arrow-right"></i></button>
+                                    {% else %}
+                                        <button id="nextQ{{ question.id }}" class="btn btn-primary disabled" onclick="finishQuiz({{ forloop.counter }});">Finish <i class="fe fe-send"></i></button>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </form>
+            </div>
+        </div>
+
+        <div aria-live="polite" aria-atomic="true" style="top: 10px; right: 10px; position: absolute; min-height: 200px;">
+            <div class="toast align-items-center text-white bg-warning border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        Problem
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+    {% elif step == 'results' %}
+        <div class="card">
+            <!-- card body -->
+            <div class="card-body p-10 text-center">
+                <!-- text -->
+                <div class="mb-4 ">
+                    {% if results.percentage > 75 %}
+                        <h2>🎉 Congratulations. You passed!</h2>
+                        <p class="mb-0 px-lg-14">You are successfully completed the quiz. Now click on finish to review your quiz.</p>
+                    {% else %}
+                        <h2>:( Oops ! Not Sufficient</h2>
+                        <p class="mb-0 px-lg-14">You are unsuccessfully completed the quiz. Now click on finish to review your quiz.</p>
+                    {% endif %}
+                </div>
+                <!-- chart -->
+                <div class="d-flex justify-content-center">
+                    <div id="chart"></div>
+                    <script>
+                        window.addEventListener('load', () => {
+                            const options = {
+                                series: [{{ results.percentage }}],
+                                chart: {
+                                    type: 'radialBar',
+                                    height: 150,
+                                    width: 150,
+                                },
+                                plotOptions: {
+                                    radialBar: {
+                                        hollow: {size: '50%'},
+                                        dataLabels: {
+                                            name: {
+                                                show: true,
+                                                offsetY: 5
+                                            },
+                                            value: {show: false},
+                                        },
+                                    },
+                                },
+                                colors: ['{% if results.percentage >= 75 %}#37a169{% else %}#aa0000{% endif %}'],
+                                stroke: {lineCap: 'round'},
+                                labels:["{{ results.percentage }}%"]
+                            };
+
+                            const chart = new ApexCharts(document.getElementById('chart'), options);
+                            chart.render();
+                        });
+                    </script>
+                </div>
+                <!-- text -->
+                <div class="mt-3">
+                    <span>Your Score: <span class="text-dark">{{ results.numberOfGoodAnswer }} points</span></span><br>
+                </div>
+                <div class="row mt-3">
+
+                </div>
+                <!-- btn -->
+                <div class="mt-5">
+                    <a href="{% url 'quiz_attempt' quiz_hash %}" class="btn btn-primary">See correction</a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    <script src="{% static 'quiz.js' %}"></script>
+{% endblock %}
