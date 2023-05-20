@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-iwrx-g1g$md^261&20d))lwk83#htipna^emr5*m5obi^$*bi(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['front-k3dvzrn44a-od.a.run.app']
 
 
 # Application definition
