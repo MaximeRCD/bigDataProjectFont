@@ -87,14 +87,14 @@ def play(request, step):
 
         mapping = {"1": "un", "2": "deux", "3": "trois", "4": "quatre"}
         mapping_correction = {"oui": "oui", "non": "non"}
-        dictionnaire_final = {'user_id': 0, 'questions': {}}
+        dictionnaire_final = {"user_id": 0, "questions": {}}
 
         for key in question_fields.keys():
             question_number = key[1:]  # Récupère le numéro de la question sans le préfixe 'q'
 
             if key not in correction_fields:
                 response_id = int(question_fields[key])
-                correction = correction_fields[key]
+                correction = correction_fields['correction_'+key]
 
                 if correction.lower() in mapping_correction:
                     response_order = mapping_correction[correction.lower()]
@@ -108,7 +108,7 @@ def play(request, step):
 
                 if corresponding_key:
                     response_id = int(question_fields[key])
-                    correction = correction_fields[corresponding_key]
+                    correction = correction_fields['correction_'+corresponding_key]
 
                     if correction.lower() in mapping_correction:
                         response_order = mapping_correction[correction.lower()]
@@ -120,13 +120,12 @@ def play(request, step):
                     continue
 
             dictionnaire_final['questions'][question_number] = {
-                'user': response_order,
-                'model': model_response
+                "user": response_order,
+                "model": model_response
             }
 
-        dictionnaire_final['user_id'] = request.user.id
-
-        print(dictionnaire_final)
+        dictionnaire_final["user_id"] = request.user.id
+        response = requests.post('https://api-k3dvzrn44a-od.a.run.app/ml/saveAudio', json=dictionnaire_final)
 
         combined_values = str(timezone.now()) + str(request.user.username)
         quiz_hash = hashlib.sha256(combined_values.encode('utf-8')).hexdigest()
