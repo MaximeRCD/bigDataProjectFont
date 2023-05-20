@@ -1,0 +1,45 @@
+stages:
+  - build
+  - list
+  - deploy
+  - destroy
+  - check
+
+
+
+variables:
+  DOCKER_REGISTRY: registry.gitlab.com
+  DOCKER_REPOSITORY: big_data_project/container_registry
+  GCP_REGION: europe-west9
+
+.gcp_login: 
+  image: google/cloud-sdk:latest
+  before_script:
+    - echo $GCP_SERVICE_KEY > gcloud-service-key.json # Save Google cloud contents in a temporary json file
+    - gcloud auth activate-service-account --key-file gcloud-service-key.json # Activate your service account
+    - gcloud auth configure-docker # Configure docker environment
+    - gcloud config set project $GCP_PROJECT_ID
+
+build:build_front:
+  extends: .gcp_login
+  stage: build
+  image: google/cloud-sdk:latest
+  script:
+    - gcloud builds submit --config cloudbuild.yaml
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main" '
+      changes:
+        - .
+
+
+deploy:deploy_front:
+  stage: deploy
+  extends: .gcp_login
+  script:
+    - gcloud run deploy front --image gcr.io/$GCP_PROJECT_ID/front:0.1 --region $GCP_REGION --platform managed --allow-unauthenticated --port 8000
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main" '
+      changes:
+        - .
+
+
