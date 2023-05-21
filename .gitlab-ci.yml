@@ -28,8 +28,7 @@ build:build_front:
     - gcloud builds submit --config cloudbuild.yaml
   rules:
     - if: '$CI_COMMIT_BRANCH == "main" '
-      changes:
-        - .
+
 
 
 deploy:deploy_front:
@@ -39,7 +38,6 @@ deploy:deploy_front:
     - gcloud run deploy front --image gcr.io/$GCP_PROJECT_ID/front:0.1 --region $GCP_REGION --platform managed --allow-unauthenticated --port 8000
   rules:
     - if: '$CI_COMMIT_BRANCH == "main" '
-      changes:
-        - .
+
 
 
