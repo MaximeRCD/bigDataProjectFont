@@ -23,7 +23,11 @@
                             {% elif response.id == user_response.id and not response.is_true %}
                                 <button class="btn btn-danger text-start">{{ response.response }}</button>
                             {% elif response.is_true %}
-                                <button class="btn btn-outline-success text-start">{{ response.response }}</button>
+                                <button class="btn btn-outline-success text-start">
+                                    <span class="position-relative top-0 start-100 translate-middle badge rounded-pill bg-success">
+                                        <i class="fe fe-check"></i>
+                                    </span>
+                                    {{ response.response }}</button>
                             {%  else %}
                                 <button class="btn btn-outline-secondary text-start">{{ response.response }}</button>
                             {%  endif %}
