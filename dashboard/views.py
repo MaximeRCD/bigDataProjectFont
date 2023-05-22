@@ -40,7 +40,7 @@ def dashboard(request):
 
     try:
         if len(theme_reussi.json()) > 0:
-            context['successful_theme'] = Theme.objects.get(id=theme_reussi.json()[0]['themeId']).theme
+            context['successful_theme'] = Theme.objects.get(id=theme_reussi.json()[-1]['themeId']).theme
         else:
             context['successful_theme'] = '...'
     except json.JSONDecodeError as e:
